@@ -1,13 +1,13 @@
 from django import template
 from django.utils.safestring import mark_safe
 
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 from unitedcp import gat
 
 register = template.Library()
 
-MAP_IMAGE_URL = settings.STATIC_URL + 'images/ragnarok/data/maps/{}.png'
-GAT_IMAGE_RUL = settings.os.path.join(settings.BASE_DIR, 'unitedcp/static/images/ragnarok/data/maps/{}.gat')
+MAP_IMAGE_URL = STATIC_URL + 'images/ragnarok/data/maps/{}.png'
+GAT_IMAGE_RUL = os.path.join(BASE_DIR, 'unitedcp/static/images/ragnarok/data/maps/{}.gat')
 
 
 @register.simple_tag()

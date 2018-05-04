@@ -1,6 +1,5 @@
 from .forms import *
-from ragnarokcp import settings
-
+from ragnarokcp.settings.base import *
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 
@@ -23,7 +22,7 @@ def ranking_main(request):
                 characters = Char.objects.values('name', 'base_level', 'job_level', 'base_exp', 'job_exp', 'guild_id',
                                                  'class_field',
                                                  'account_id__sex').filter(
-                    account_id__group_id__lt=settings.EVENTER).order_by(
+                    account_id__group_id__lt=EVENTER).order_by(
                     '-base_level',
                     '-base_exp',
                     '-job_level',
@@ -33,7 +32,7 @@ def ranking_main(request):
                 characters = Char.objects.values('name', 'base_level', 'job_level', 'base_exp', 'job_exp', 'guild_id',
                                                  'class_field',
                                                  'account_id__sex').filter(
-                    account_id__group_id__lt=settings.EVENTER, class_field=job).order_by(
+                    account_id__group_id__lt=EVENTER, class_field=job).order_by(
                     '-base_level',
                     '-base_exp',
                     '-job_level',
@@ -49,7 +48,7 @@ def ranking_main(request):
     else:
         characters = Char.objects.values('name', 'base_level', 'job_level', 'base_exp', 'job_exp', 'guild_id',
                                          'class_field', 'account_id__sex').filter(
-            account_id__group_id__lt=settings.EVENTER).order_by(
+            account_id__group_id__lt=EVENTER).order_by(
             '-base_level',
             '-base_exp',
             '-job_level',
@@ -65,7 +64,7 @@ def ranking_main(request):
 def ranking_guild(request):
     guilds = Guild.objects.values('guild_id', 'guild_name', 'guild_lv', 'average_lv', 'max_member', 'exp',
                                   'master').filter(
-        char_id__account_id__group_id__lt=settings.EVENTER).order_by('-guild_lv', '-exp', '-average_lv', '-max_member',
+        char_id__account_id__group_id__lt=EVENTER).order_by('-guild_lv', '-exp', '-average_lv', '-max_member',
                                                                      'next_exp')[:25]
 
     if not guilds.exists():
@@ -76,7 +75,7 @@ def ranking_guild(request):
 def ranking_zeny(request):
     characters = Char.objects.values('name', 'base_level', 'job_level', 'class_field', 'zeny', 'guild_id',
                                      'account_id__sex').filter(
-        account_id__group_id__lt=settings.EVENTER).order_by('-zeny', '-base_level', '-base_exp', '-job_level',
+        account_id__group_id__lt=EVENTER).order_by('-zeny', '-base_level', '-base_exp', '-job_level',
                                                             '-job_exp', 'char_id')[:25]
     if not characters.exists():
         characters = None
@@ -86,7 +85,7 @@ def ranking_zeny(request):
 def ranking_mvp(request):
     characters = MvpRating.objects.values('char_id__name', 'score', 'mvp_amount', 'char_id__guild_id',
                                           'char_id__class_field').filter(
-        char_id__account_id__group_id__lt=settings.EVENTER).order_by('-score', '-mvp_amount', 'char_id')[:25]
+        char_id__account_id__group_id__lt=EVENTER).order_by('-score', '-mvp_amount', 'char_id')[:25]
     if not characters.exists():
         characters = None
     return render(request, 'default/rankings/mvp_ranking.html', {'MvpRanking': characters})

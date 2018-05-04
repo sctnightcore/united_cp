@@ -1,5 +1,3 @@
-from ragnarokcp import settings
-from django.core.cache import cache
 from unitedcp.ragnarok.models import (Vendings, VendingItems)
 
 from rest_framework.views import APIView

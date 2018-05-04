@@ -13,7 +13,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.aggregates import Count
 
-from ragnarokcp.settings import (USE_MD5, DEFAULT_MAP, DEFAULT_X, DEFAULT_Y)
+from ragnarokcp.settings.base import (USE_MD5, DEFAULT_MAP, DEFAULT_X, DEFAULT_Y)
 
 
 class AutotradeMerchantsManager(models.Manager):

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 
 
 class GameRegisterForm(forms.Form):
@@ -49,19 +49,19 @@ class GameRegisterForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if len(username) < settings.MIN_USERNAME_LENGTH or len(username) > settings.MAX_USERNAME_LENGTH:
+        if len(username) < MIN_USERNAME_LENGTH or len(username) > MAX_USERNAME_LENGTH:
             raise ValidationError(_("Your username must be between {min_length} and {max_length} characters."),
                                   code='username_too_short',
-                                  params={'min_length': settings.MIN_USERNAME_LENGTH, 'max_length': settings.MAX_USERNAME_LENGTH})
+                                  params={'min_length': MIN_USERNAME_LENGTH, 'max_length': MAX_USERNAME_LENGTH})
         return username
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
 
-        if len(password) > settings.MAX_PASSWORD_LENGTH:
+        if len(password) > MAX_PASSWORD_LENGTH:
             raise ValidationError(_("Use {max_length} characters or fewer for username."),
                                   code='password_too_long',
-                                  params={'max_length': settings.MIN_PASSWORD_UPPERCASE})
+                                  params={'max_length': MIN_PASSWORD_UPPERCASE})
         return password
 
 
@@ -108,17 +108,17 @@ class SetMasterAccountForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if len(username) < settings.MIN_USERNAME_LENGTH or len(username) > settings.MAX_USERNAME_LENGTH:
+        if len(username) < MIN_USERNAME_LENGTH or len(username) > MAX_USERNAME_LENGTH:
             raise ValidationError(_("Your username must be between {min_length} and {max_length} characters."),
                                   code='username_too_short',
-                                  params={'min_length': settings.MIN_USERNAME_LENGTH, 'max_length': settings.MAX_USERNAME_LENGTH})
+                                  params={'min_length': MIN_USERNAME_LENGTH, 'max_length': MAX_USERNAME_LENGTH})
         return username
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
 
-        if len(password) > settings.MAX_PASSWORD_LENGTH:
+        if len(password) > MAX_PASSWORD_LENGTH:
             raise ValidationError(_("Use {max_length} characters or fewer for username."),
                                   code='password_too_long',
-                                  params={'max_length': settings.MIN_PASSWORD_UPPERCASE})
+                                  params={'max_length': MIN_PASSWORD_UPPERCASE})
         return password

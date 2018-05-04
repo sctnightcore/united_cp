@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from unitedcp.models import (PanelLogs, UserRewards)
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 
 
 def guide_upload(instance, filename):
@@ -15,10 +15,10 @@ def guide_upload(instance, filename):
 
 def main_image_validation(file):
     ext = os.path.splitext(file.name)[1]
-    if ext not in settings.VALID_EXTENTIONS:
+    if ext not in VALID_EXTENTIONS:
         raise ValidationError(_('File not supported!'), code='file_not_supported')
 
-    if file._size > settings.GUIDE_MAX_IMAGE_SIZE:
+    if file._size > GUIDE_MAX_IMAGE_SIZE:
         raise ValidationError(_('File size too big'), code='size_too_big')
 
 

@@ -14,7 +14,7 @@ from unitedcp.ragnarok.forms import (GameRegisterForm, SetMasterAccountForm)
 from unitedcp.accounts.models import PromoCodes
 from .funcs import *
 from .forms import *
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 
 
 @login_required
@@ -23,13 +23,13 @@ def control_panel(request):
         'GameAccounts': get_game_accounts(request.user.id),
         'Donations': {
             'YandexMoney': {
-                'wallet': settings.YANDEX_MONEY_WALLET,
-                'rate': settings.DONATION_RATE,
-                'enabled': settings.YANDEX_MONEY_ENABLED
+                'wallet': YANDEX_MONEY_WALLET,
+                'rate': DONATION_RATE,
+                'enabled': YANDEX_MONEY_ENABLED
             },
         },
         'UserChangePasswordForm': UserChangePasswordForm(),
-        'DefaultMap': settings.DEFAULT_MAP,
+        'DefaultMap': DEFAULT_MAP,
         'RecentActions': get_latest_actions(request.user.id, 5),
         'ChangeEmailForm': UserChangeEmailForm(),
         'Characters': get_account_characters(request.user.id),
@@ -144,12 +144,12 @@ def user_change_email(request):
             )
 
             send_mail(
-                subject='{} verification'.format(settings.SERVER_NAME),
-                message='Welcome to {}'.format(settings.SERVER_NAME),
+                subject='{} verification'.format(SERVER_NAME),
+                message='Welcome to {}'.format(SERVER_NAME),
                 from_email='noreply@alfheim.ro',
                 recipient_list=[email],
-                html_message=settings.VERIFY_TEMPLATE.format(settings.SERVER_NAME, settings.SERVER_URL + '/verify/{}/2/'.format(key), settings.SERVER_URL,
-                                                             settings.SERVER_URL, 'want to change your master account E-Mail')
+                html_message=VERIFY_TEMPLATE.format(SERVER_NAME, SERVER_URL + '/verify/{}/2/'.format(key), SERVER_URL,
+                                                             SERVER_URL, 'want to change your master account E-Mail')
             )
         else:
             messages.add_message(request, messages.INFO, form.errors)

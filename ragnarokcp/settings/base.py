@@ -12,19 +12,25 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 import json
+from pathlib import Path
 from django.utils.translation import ugettext_lazy as _
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# Utilities
+PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
+# The full path to the repository root.
+BASE_DIR = PROJECT_PACKAGE.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+data_dir_key = 'DATA_DIR'
+DATA_DIR = Path(os.environ[data_dir_key]) if data_dir_key in os.environ else BASE_DIR.parent
 
-# Application definition
+try:
+    with DATA_DIR.joinpath('conf', 'secrets.json').open() as handle:
+        SECRETS = json.load(handle)
+except IOError:
+    SECRETS = {
+        'secret_key': 'a',
+    }
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -85,11 +91,9 @@ WSGI_APPLICATION = 'ragnarokcp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR, '/conf/my.cnf'),
+        },
     }
 }
 
@@ -121,7 +125,7 @@ PASSWORD_HASHERS = [
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'unitedcp/cache'),
+        'LOCATION': os.path.join(BASE_DIR, '../unitedcp/cache'),
     }
 }
 
@@ -132,7 +136,7 @@ LANGUAGES = [
 ]
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, '../locale'),
 ]
 
 # Internationalization
@@ -321,3 +325,5 @@ VALID_EXTENTIONS = [
     '.jpg',
     '.bmp'
 ]
+
+SECRET_KEY = SECRETS['secret_key']

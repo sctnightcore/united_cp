@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 
 
 class LoginForm(forms.Form):
@@ -53,8 +53,8 @@ class FastRegisterForm(forms.Form):
 
     username = forms.CharField(
         label=_('Login'),
-        max_length=settings.MAX_USERNAME_LENGTH,
-        min_length=settings.MIN_USERNAME_LENGTH,
+        max_length=MAX_USERNAME_LENGTH,
+        min_length=MIN_USERNAME_LENGTH,
         widget=forms.TextInput(
             attrs={
                 'placeholder': _('Login'),
@@ -62,12 +62,12 @@ class FastRegisterForm(forms.Form):
                 'class': 'form-control'
             }
         ),
-        help_text=_('Your username must be between {} and {} characters'.format(settings.MIN_USERNAME_LENGTH, settings.MAX_USERNAME_LENGTH))
+        help_text=_('Your username must be between {} and {} characters'.format(MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH))
     )
 
     password = forms.CharField(
         label=_('Password'),
-        max_length=settings.MAX_PASSWORD_LENGTH,
+        max_length=MAX_PASSWORD_LENGTH,
         min_length=4,
         widget=forms.PasswordInput(
             attrs={
@@ -76,7 +76,7 @@ class FastRegisterForm(forms.Form):
                 'class': 'form-control'
             }
         ),
-        help_text=_('Your password must be between {} and {} characters'.format(4, settings.MAX_PASSWORD_LENGTH))
+        help_text=_('Your password must be between {} and {} characters'.format(4, MAX_PASSWORD_LENGTH))
     )
 
     gender = forms.CharField(
@@ -97,10 +97,10 @@ class FastRegisterForm(forms.Form):
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
 
-        if len(username) < settings.MIN_USERNAME_LENGTH or len(username) > settings.MAX_USERNAME_LENGTH:
+        if len(username) < MIN_USERNAME_LENGTH or len(username) > MAX_USERNAME_LENGTH:
             raise ValidationError(_("Your username must be between {min_length} and {max_length} characters."),
                                   code='wrong_username_Length',
-                                  params={'min_length': settings.MIN_USERNAME_LENGTH, 'max_length': settings.MAX_USERNAME_LENGTH})
+                                  params={'min_length': MIN_USERNAME_LENGTH, 'max_length': MAX_USERNAME_LENGTH})
 
         return cleaned_data
 
@@ -124,8 +124,8 @@ class RegisterForm(forms.Form):
 
     username = forms.CharField(
         label=_('Login'),
-        max_length=settings.MAX_USERNAME_LENGTH,
-        min_length=settings.MIN_USERNAME_LENGTH,
+        max_length=MAX_USERNAME_LENGTH,
+        min_length=MIN_USERNAME_LENGTH,
         widget=forms.TextInput(
             attrs={
                 'placeholder': _('Login'),
@@ -133,12 +133,12 @@ class RegisterForm(forms.Form):
                 'class': 'form-control'
             }
         ),
-        help_text=_('Your username must be between {} and {} characters'.format(settings.MIN_USERNAME_LENGTH, settings.MAX_USERNAME_LENGTH))
+        help_text=_('Your username must be between {} and {} characters'.format(MIN_USERNAME_LENGTH, MAX_USERNAME_LENGTH))
     )
 
     password = forms.CharField(
         label=_('Password'),
-        max_length=settings.MAX_PASSWORD_LENGTH,
+        max_length=MAX_PASSWORD_LENGTH,
         min_length=4,
         widget=forms.PasswordInput(
             attrs={
@@ -147,12 +147,12 @@ class RegisterForm(forms.Form):
                 'class': 'form-control'
             }
         ),
-        help_text=_('Your password must be between {} and {} characters'.format(4, settings.MAX_PASSWORD_LENGTH))
+        help_text=_('Your password must be between {} and {} characters'.format(4, MAX_PASSWORD_LENGTH))
     )
 
     confirm_password = forms.CharField(
         label=_('Confirm password'),
-        max_length=settings.MAX_PASSWORD_LENGTH,
+        max_length=MAX_PASSWORD_LENGTH,
         min_length=4,
         widget=forms.PasswordInput(
             attrs={
@@ -185,10 +185,10 @@ class RegisterForm(forms.Form):
         if rules == 'False':
             raise ValidationError(_("You must accept server rules"), code='accept_rules')
 
-        if len(username) < settings.MIN_USERNAME_LENGTH or len(username) > settings.MAX_USERNAME_LENGTH:
+        if len(username) < MIN_USERNAME_LENGTH or len(username) > MAX_USERNAME_LENGTH:
             raise ValidationError(_("Your username must be between {min_length} and {max_length} characters."),
                                   code='wrong_username_Length',
-                                  params={'min_length': settings.MIN_USERNAME_LENGTH, 'max_length': settings.MAX_USERNAME_LENGTH})
+                                  params={'min_length': MIN_USERNAME_LENGTH, 'max_length': MAX_USERNAME_LENGTH})
 
         if password != confirm_password:
             raise ValidationError(_("Password doesn\'t match!"), code='password_doesnt_match')

@@ -11,18 +11,18 @@ from unitedcp.ragnarok.models import Guild
 from unitedcp.staff.news.models import CPNewsTags
 from unitedcp.accounts.models import UserProfile
 from unitedcp.shop.models import Shop
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 
 register = template.Library()
 
 TAG_SEARCH_URL = '/search/{}/tags'
-IMAGE_URL = settings.STATIC_URL + '{}'
-ITEMS_ICON_IMAGE_URL = settings.STATIC_URL + 'images/ragnarok/data/items/icons/{}.gif'
-ITEMS_COLLECT_IMAGE_URL = settings.STATIC_URL + 'images/ragnarok/data/items/images/{}.png'
-JOB_IMAGE_URL = settings.STATIC_URL + 'images/ragnarok/data/jobs/images/{0}/{1}.gif'
-MONSTER_IMAGE_URL = settings.STATIC_URL + 'images/ragnarok/data/monsters/{}.gif'
-EMBLEMS_IMAGE_URL = settings.STATIC_URL + 'images/ragnarok/data/emblems/{}.bmp'
-EMBLEMS_PATH = 'unitedcp' + settings.STATIC_URL + 'images/ragnarok/data/emblems/{}.bmp'
+IMAGE_URL = STATIC_URL + '{}'
+ITEMS_ICON_IMAGE_URL = STATIC_URL + 'images/ragnarok/data/items/icons/{}.gif'
+ITEMS_COLLECT_IMAGE_URL = STATIC_URL + 'images/ragnarok/data/items/images/{}.png'
+JOB_IMAGE_URL = STATIC_URL + 'images/ragnarok/data/jobs/images/{0}/{1}.gif'
+MONSTER_IMAGE_URL = STATIC_URL + 'images/ragnarok/data/monsters/{}.gif'
+EMBLEMS_IMAGE_URL = STATIC_URL + 'images/ragnarok/data/emblems/{}.bmp'
+EMBLEMS_PATH = 'unitedcp' + STATIC_URL + 'images/ragnarok/data/emblems/{}.bmp'
 
 
 @register.simple_tag()

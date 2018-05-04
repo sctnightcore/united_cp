@@ -1,6 +1,6 @@
 import struct
 from PIL import Image, ImageDraw
-from ragnarokcp import settings
+from ragnarokcp.settings.base import *
 
 
 class Gat:
@@ -72,6 +72,6 @@ class Gat:
 
         if ret:
             return d
-        im.save(settings.os.path.join(settings.BASE_DIR, 'unitedcp/static/images/ragnarok/data/maps/' + mapname + '.png'), 'PNG')
+        im.save(os.path.join(BASE_DIR, 'unitedcp/static/images/ragnarok/data/maps/' + mapname + '.png'), 'PNG')
         del d
         return True
