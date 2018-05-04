@@ -2,5 +2,5 @@ cache/
 .idea/
 unitedcp/cache/
 *.djcache
-pychache
-.pyc
+__pycache__/
+*.py[cod]
