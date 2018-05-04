@@ -1,0 +1,98 @@
+{% extends 'united/index.html' %}
+{% load static %}
+{% block banner %}
+    <section class="youplay-banner banner-top youplay-banner-parallax">
+        <div class="image"
+             style="background-image: url('{% static 'images/light/top-bg_new.jpg' %}')"></div>
+        <div class="info text-center">
+            <div>
+                <div class="container">
+                    <h3> '{{ Announce.2 }}'</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block body %}
+    <div class="container youplay-content">
+        <div class="col-md-9 col-md-push-3">
+            <blockquote>
+                {% autoescape off %}
+                    {{ Announce.1 }}
+                {% endautoescape %}
+            </blockquote>
+            <!-- Post Comments -->
+            <div class="comments-block">
+                <h2>Comments</h2>
+                <!-- Comments List -->
+                <ul class="comments-list">
+                    {% for comment in Comments %}
+                        <li>
+                            <article>
+                                <div class="comment-cont clearfix">
+                                    <div class="comment-avatar pull-left">
+                                        <img src="{% static 'images/light/avatar.png' %}" alt="">
+                                    </div>
+                                    <a class="comment-author h4" href="">{{ comment.character }}</a>
+                                    <div class="date">
+                                        <i class="fa fa-calendar"></i> {{ comment.comment_date|date:'d-m-Y H:i' }}
+                                    </div>
+                                    <div class="comment-text">
+                                        {% autoescape off %}
+                                            {{ comment.message }}
+                                        {% endautoescape %}
+
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <!-- /Comments List -->
+
+                <!-- Comment Form -->
+                <h2>Writ comment</h2>
+                {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'announce_view' Announce.0 %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ CommentForm.message }}
+                        </div>
+                        <button type="submit" class="btn btn-success">Add comment</button>
+                    </form>
+                {% else %}
+                    <p>You must be logged in before posting a comment.</p>
+                {% endif %}
+                <!-- /Comment Form -->
+            </div>
+        </div>
+        <div class="col-md-3 col-md-pull-9">
+            <div class="side-block">
+                <h4 class="block-title">Announcement</h4>
+                <ul class="block-content text-center">
+                    <li>Type: {{ Announce.4 }}</li>
+                    <li>Author: <b></b>{{ Announce.3 }}</li>
+                    <li>Date: {{ Announce.5|date:'d-m-Y H:i' }}</li>
+                    <li>Updated: {{ Announce.7|date:'d-m-Y H:i' }}</li>
+                    {% if Announce.6 is user.id %}
+                        <li><a href="{% url 'announce_update' Announce.0 %}" class="btn btn-sm btn-default">Update</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Tinymce -->
+    <script type="text/javascript" src="{% static 'bower_components/tinymce/tinymce.min.js' %}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea',
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            required: false
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'default/panel/index.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">{% trans "Account overview" %}</h4></div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="#">{% trans "Dashboard" %}</a></li>
+                        <li class="active">{{ GameAccount.userid }}</li>
+                    </ol>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 class="box-title">{{ GameAccount.userid }} {% trans "overview" %}</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{% trans "Login" %}</th>
+                                    <th>{% trans "Last login" %}</th>
+                                    <th>{% trans "Last IP" %}</th>
+                                    <th>{% trans "Gender" %}</th>
+                                    <th>{% trans "Banned" %}</th>
+                                    <th>{% trans "Login count" %}</th>
+                                    <th>{% trans "Characters" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ GameAccount.userid }}</td>
+                                    <td>{{ GameAccount.lastlogin|default:"00.00.0000 00:00:00" }}</td>
+                                    <td>{{ GameAccount.last_ip|default:"0.0.0.0" }}</td>
+                                    <td>{{ GameAccount.sex }}</td>
+                                    <td>
+                                        {% if GameAccount.state %}
+                                            {{ GameAccount.unban_time|date:"d M Y" }}
+                                        {% else %}
+                                            {% trans "No" %}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ GameAccount.logincount }}</td>
+                                    <td>0</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 class="box-title">{% trans "Change password" %}</h3>
+                        <form action="{% url 'game_account_settings' GameAccount.account_id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="{{ ChangePassForm.new_password.id_for_label }}" class="sr-only">{{ ChangePassForm.new_password.label }}</label>
+                                    {{ ChangePassForm.new_password }}
+                                    <p class="help-block">{{ ChangePassForm.new_password.help_text }}</p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-instagram">{% trans "Change" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> 2017 &copy; {{ ServerName }} - {% trans "Account overview" %} :: {{ GameAccount.userid }} ::</footer>
+    </div>
+{% endblock %}

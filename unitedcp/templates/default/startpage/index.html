@@ -1,0 +1,38 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% trans "Welcome to the " %} {{ ServerName }}!</title>
+    <link href="{% static 'default/startpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'default/startpage/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href="{% static 'default/startpage/css/creative.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'default/startpage/css/main.css' %}">
+</head>
+<body id="page-top">
+<header class="masthead">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <img src="{% static 'default/startpage/img/alrologo.png' %}">
+            <p class="server-text">{% trans "Welcome to the" %} {{ ServerName }}</p>
+            <div class="counter clear" data-date="2017-09-16 20:00:00"></div>
+            <hr>
+            <a class="btn btn-primary btn-xl" href="{% url 'main' %}">{% trans "Home" %}</a>
+            <a class="btn btn-primary btn-xl" href="http://community.alfheim.ro/">{% trans "Community" %}</a>
+        </div>
+    </div>
+</header>
+<script src="{% static 'default/startpage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'default/startpage/vendor/popper/popper.min.js' %}"></script>
+<script src="{% static 'default/startpage/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'default/startpage/js/TimeCircles.js' %}"></script>
+<script type="text/javascript" src="{% static 'default/startpage/js/backstretch.js' %}"></script>
+<script type="text/javascript" src="{% static 'default/startpage/js/main.js' %}"></script>
+</body>
+</html>

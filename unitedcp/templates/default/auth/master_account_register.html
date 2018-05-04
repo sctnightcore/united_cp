@@ -1,0 +1,59 @@
+{% extends 'default/index.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+    <div class="gtco-container wrapper">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 animate-box" data-animate-effect="fadeInLeft">
+                <div class="form-wrap">
+                    <h1>{% trans "Create master account" %}</h1>
+                    <p>Надоело заполнять поля? Попробуйте <a href="">быструю регистрацию!</a></p>
+                    {% include 'default/partials/messages.html' %}
+                    <form action="{% url 'auth_register' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="{{ RegisterForm.username.id_for_label }}" class="sr-only">{{ RegisterForm.username.label }}</label>
+                                {{ RegisterForm.username }}
+                                <p class="help-block">{{ RegisterForm.username.help_text }}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="{{ RegisterForm.email.id_for_label }}" class="sr-only">{{ RegisterForm.email.label }}</label>
+                                {{ RegisterForm.email }}
+                                <p class="help-block">{{ RegisterForm.email.help_text }}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="{{ RegisterForm.password.id_for_label }}" class="sr-only">{{ RegisterForm.password.label }}</label>
+                                {{ RegisterForm.password }}
+                                <p class="help-block">{{ RegisterForm.password.help_text }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ RegisterForm.confirm_password.id_for_label }}" class="sr-only">{{ RegisterForm.confirm_password.label }}</label>
+                                {{ RegisterForm.confirm_password }}
+                                <p class="help-block">{{ RegisterForm.confirm_password.help_text }}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="{{ RegisterForm.rules.id_for_label }}" class="sr-only">{{ RegisterForm.rules.label }}</label>
+                                {{ RegisterForm.rules }} {{ RegisterForm.rules.help_text }}
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success">{% trans "Sign up" %}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+{% endblock %}

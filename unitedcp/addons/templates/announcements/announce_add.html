@@ -1,0 +1,71 @@
+{% extends 'united/index.html' %}
+{% load static %}
+
+{% block banner %}
+    <div class="youplay-banner banner-top youplay-banner-parallax small">
+        <div class="image" style="background-image: url('{% static 'images/light/top-bg_new.jpg' %}')"></div>
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1>Create announcement</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container youplay-content">
+        <div class="row">
+            <div class="col-md-9">
+                <form method="POST" action="{% url 'announce_add' %}">
+                    {% csrf_token %}
+                    <label for="title">{{ AddForm.title.label }}</label>
+                    <div class="youplay-input">
+                        {{ AddForm.title }}
+                    </div>
+                    <label for="announce_type">{{ AddForm.announce_type.label }}</label>
+                    <div class="youplay-select">
+                        {{ AddForm.announce_type }}
+                    </div>
+                    <div class="form-group" style="padding-top: 10px;">
+                        {{ AddForm.message }}
+                    </div>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </form>
+            </div>
+            <!-- Right Side -->
+            <div class="col-md-3">
+                <div class="side-block">
+                    <h4 class="block-title">Tips</h4>
+                    <div class="block-content">
+                        <p class="text-danger">{{ MainChar }}</p>
+                        <p>This name will be used when you add new announcement</p>
+                        <p>You can view your announcement ingame by <b>@announces/@ann</b> commands.</p>
+                    </div>
+                </div>
+                <div class="side-block">
+                    <h4 class="block-title">Rules</h4>
+                    <div class="block-content">
+                        Using this service you automatically agree with the Server Rules
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side -->
+        </div>
+    </div>
+    <!-- Tinymce -->
+    <script type="text/javascript" src="{% static 'bower_components/tinymce/tinymce.min.js' %}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea',
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            required: false
+        });
+    </script>
+{% endblock %}

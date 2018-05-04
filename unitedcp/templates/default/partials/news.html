@@ -1,0 +1,23 @@
+{% load static %}
+{% load i18n %}
+{% with LatestNews as News %}
+    {% if News %}
+        {% for New in News %}
+            <div class="news_item mt15">
+                <div class="news_item-image pull-left">
+                    <img class="img-responsive" src="{% static 'images/' %}{{ New.main_image }}"/>
+                </div>
+                <div class="news_item-text pull-left">
+                    <h4>Обновление</h4>
+                    <p>{% autoescape off %}
+                        {{ New.description|truncatechars:30 }}
+                    {% endautoescape %}
+                    </p>
+                     <a href="{{ New.link }}">Читать далее...</a><br/>
+                    <small>{{ New.date }} написал {{ New.author }}</small>
+                </div>
+            </div>
+            <hr/>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

@@ -1,0 +1,222 @@
+{% extends 'default/rankings/index.html' %}
+{% load static %}
+{% load special %}
+{% load ragnarok %}
+
+{% block body %}
+    <section class="container" ng-controller="rankingsController">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="name_filter">Фильтр по имени</label>
+                <div class="youplay-input">
+                    <input id="name_filter" type="text" placeholder="Введите ник" ng-model="search.char_id__name">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="num">Всего [[data.length]] записи(-ей), по [[numPerPage]] на странице</label>
+                <div class="youplay-select" for="num">
+                    <select id="num" ng-options="disp as disp.size for disp in numsPerPage" ng-model="disp"
+                            ng-change="update(disp.size)"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="bgRanking">
+            <div ng-repeat="bg in data = (bgRanking | filter : search) | pagination: currentPage : numPerPage">
+                <div class="youplay-single-match">
+                    <div>
+                        <div class="pull-left">
+                            <h3 class="youplay-match-title">Статистика <b>[[bg.char_id__name]]</b> (#<b>[[$index+1]]</b>)</h3>
+                            <div>
+                                <p>
+                                    <b>Регулярных очков</b> : [[bg.points]] <br>
+                                    <b>Рейтинг. очков</b> : [[bg.rank_points]]
+                                </p>
+                                <p>Сыграл [[bg.rank_games]] рейтинговых игр</p>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <div class="img img-responsive text-center">
+                                <img ng-src="../../static/images/ragnarok/data/jobs/images/[[bg.char_id__account_id__sex]]/[[bg.char_id__class_field]].gif">
+                            </div>
+                            <p>[[bg.char_id__guild__name]]</p>
+                            <p>[ [[bg.char_id__base_level]]/[[bg.char_id__job_level]] ]</p>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="3" class="text-center" bgcolor="#FFDAB9">Game Results</th>
+                            <th colspan="3" class="text-center" bgcolor="#FFDAB9">General Standings</th>
+                            <th colspan="3" class="text-center" bgcolor="#FFDAB9">Damage</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/6379.png' %}"> Won</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/674.png' %}"> Tie</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/6480.png' %}"> Lost</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/1228.png' %}"> Kill</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7420.png' %}"> Death</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2108.png' %}"> Quits</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2235.png' %}"> Top</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/16007.png' %}"> Done</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2108.png' %}"> Recv</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[bg.win]]</td>
+                            <td>[[bg.tie]]</td>
+                            <td>[[bg.lost]]</td>
+                            <td>[[bg.kill_count]]</td>
+                            <td>[[bg.death_count]]</td>
+                            <td>[[bg.deserter]]</td>
+                            <td>[[bg.top_damage]]</td>
+                            <td>[[bg.damage_done]]</td>
+                            <td>[[bg.damage_received]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="2" class="text-center" bgcolor="#FFE4E1">Tierra TI</th>
+                            <th colspan="4" class="text-center" bgcolor="#FFE4E1">Tierra Bossnia</th>
+                            <th colspan="3" class="text-center" bgcolor="#FFE4E1">Tierra EoS</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7420.png' %}"> Skulls</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/6516.png' %}"> Boss Damage</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/6517.png' %}"> Boss Killed</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7253.png' %}"> Flags</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7253.png' %}"> Flags</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7423.gif' %}"> Bases</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[bg.skulls]]</td>
+                            <td><b>W</b> [[bg.ti_wins]] <b>L</b> [[bg.ti_lost]] <b>T</b> [[bg.ti_tie]]</td>
+                            <td>[[bg.boss_damage]]</td>
+                            <td>[[bg.boss_killed]]</td>
+                            <td>[[bg.boss_flags]]</td>
+                            <td><b>W</b> [[bg.boss_wins]] <b>L</b> [[bg.boss_lost]] <b>T</b> [[bg.boss_tie]]</td>
+                            <td>[[bg.eos_flags]]</td>
+                            <td>[[bg.eos_bases]]</td>
+                            <td><b>W</b> [[bg.eos_wins]] <b>L</b> [[bg.eos_lost]] <b>T</b> [[bg.eos_tie]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="3" class="text-center" bgcolor="#B0E0E6">Flavius TDM</th>
+                            <th colspan="2" class="text-center" bgcolor="#B0E0E6">Flavius CTF</th>
+                            <th colspan="4" class="text-center" bgcolor="#B0E0E6">Flavius Stone Control</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7420.png' %}"> Kills</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7420.png' %}"> Death</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7253.png' %}"> Flags</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/640.gif' %}"> Stole</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/640.gif' %}"> Capture</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/640.gif' %}"> Droped</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[bg.td_kills]]</td>
+                            <td>[[bg.td_deaths]]</td>
+                            <td><b>W</b> [[bg.td_wins]] <b>T</b> [[bg.td_lost]] <b>L</b> [[bg.td_tie]]</td>
+                            <td><b>C</b> [[bg.ctf_captured]] <b>T</b> [[bg.ctf_taken]] <b>D</b> [[bg.ctf_droped]]</td>
+                            <td><b>W</b> [[bg.ctf_wins]] <b>L</b> [[bg.ctf_lost]] <b>T</b> [[bg.ctf_tie]]</td>
+                            <td>[[bg.sc_stole]]</td>
+                            <td>[[bg.sc_captured]]</td>
+                            <td>[[bg.sc_droped]]</td>
+                            <td><b>W</b> [[bg.sc_wins]] <b>L</b> [[bg.sc_lost]] <b>T</b> [[bg.sc_tie]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="9" class="text-center" bgcolor="#CDB7B5">Usable Items</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/504.gif' %}"> HP</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/505.gif' %}"> SP</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7710.png' %}"> Gems</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/6114.png' %}"> Gems</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/715.png' %}"> Gems</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/676.gif' %}"> Total Zeny</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/1752.gif' %}"> Arrow</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7136.gif' %}"> Bottle</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/678.gif' %}"> Bottle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[bg.hp_heal_potions]]</td>
+                            <td>[[bg.sp_heal_potions]]</td>
+                            <td>[[bg.blue_gemstones]]</td>
+                            <td>[[bg.red_gemstones]]</td>
+                            <td>[[bg.yellow_gemstones]]</td>
+                            <td>[[bg.zeny_used]]</td>
+                            <td>[[bg.ammo_used]]</td>
+                            <td>[[bg.acid_demostration]]</td>
+                            <td>[[bg.poison_bottles]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="4" class="text-center" bgcolor="#DDA0DD">Castle Conquest</th>
+                            <th colspan="2" class="text-center" bgcolor="#CDB7B5">Skills Support</th>
+                            <th colspan="2" class="text-center" bgcolor="#CDB7B5">Total Healing</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/714.gif' %}"> Emperium</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/1019.gif' %}"> Barricade</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7429.png' %}"> G.Stone</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/658.gif' %}"> Results</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2277.gif' %}"> Correct</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/5203.gif' %}"> Wrong</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2277.gif' %}"> Correct</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/5203.gif' %}"> Wrong</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[bg.emperium_kill]]</td>
+                            <td>[[bg.barricade_kill]]</td>
+                            <td>[[bg.gstone_kill]]</td>
+                            <td><b>W</b> [[bg.cq_wins]] <b>L</b> [[bg.cq_lost]] <b>T</b> 0</td>
+                            <td>[[bg.support_skills_used]]</td>
+                            <td>[[bg.wrong_support_skills_used]]</td>
+                            <td>[[bg.healing_done]]</td>
+                            <td>[[bg.wrong_healing_done]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <ul uib-pagination
+                ng-model="currentPage"
+                total-items="data.length"
+                items-per-page="numPerPage"
+                class="pagination-sm"
+                next-text="Вперед"
+                previous-text="Назад"
+                max-size="5"
+                ng-change="pageChanged()">
+            </ul>
+        </div>
+    </section>
+{% endblock %}

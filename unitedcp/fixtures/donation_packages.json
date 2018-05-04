@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "123",
+    "cost": 100,
+    "desc": "12321",
+    "item_list": {
+      "items": [
+        "20 Kafra Card",
+        "1 Battle Manual"
+      ]
+    },
+    "popular": true
+  },
+  {
+
+  }
+]

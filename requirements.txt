@@ -1,0 +1,7 @@
+django
+django-recaptcha
+Pillow
+mysqlclient
+user-agents
+djangorestframework
+requests

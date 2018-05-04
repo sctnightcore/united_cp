@@ -1,0 +1,396 @@
+{% extends 'default/index.html' %}
+{% load static %}
+{% block body %}
+    <body>
+    <style>
+        .woe-table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        .woe-details .woe-detail-container {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .woe-table > tbody > tr.woe-details > td {
+            vertical-align: top;
+        }
+
+        .woe-table > tbody > tr.woe-details > td table td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .guildCounter {
+            display: inline-block;
+            margin-left: 7px;
+        }
+        .guildCounter:hover {
+            cursor: pointer;
+        }
+    </style>
+    <section class="character-ranking" ng-controller="woeController">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" style="margin-left:0;">
+                    <label for="name_filter">Фильтр по имени</label>
+                    <div class="form-group">
+                        <input id="name_filter" type="text" placeholder="Введите ник" ng-model="search.char_id__name"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="num">Всего [[data.length]] записи(-ей), по [[numPerPage]] на странице</label>
+                    <div class="form-group" for="num">
+                        <select id="num" ng-options="disp as disp.size for disp in numsPerPage" ng-model="disp"
+                                ng-change="update(disp.size)" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="num">Фильтр по профессии <a style="cursor: pointer" ng-click="update2('');classId = ''">Сброс</a></label>
+                    <div class="form-group" for="class">
+                        <select id="class" ng-options="disp as classes[disp] for disp in classIds" ng-model="classId"
+                                ng-change="update2(classId)" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="num">Дата</label>
+                    <p>[[woeDate]]<br/>
+                        <a href="" ng-click="prevDate()">← Предыдущее</a> <a href="" ng-click="nextDate()">Следующее
+                            →</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <strong>Гильдия:</strong>
+                <div class="guildCounter" title="Членов: [[guild.memcount]]" ng-click="searchGuild(guild.char_id__guild_id)" ng-repeat="guild in guildCount" post-guild-render>
+                    <img src="http://chargen.alfheim.ro/emblem/[[guild.char_id__guild_id]]"/>
+                </div>
+                <a style="cursor: pointer" ng-click="searchGuild('')">Любая</a>
+            </div>
+            <div class="row" ng-show="woeRanking">
+                <table class="table table-responsive woe-table">
+                    <thead>
+                    <th>Место</th>
+                    <th title="Гильдий, Голова, Ник">Персонаж</th>
+                    <th></th>
+                    <th>
+                        <a href="" title="ГВ Очки" ng-click="sortBy('score')">Рейтинг<span
+                                ng-show="propertyName == 'score'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Убийства" ng-click="sortBy('kill_count')"><img
+                                src="{% static 'images/ragnarok/data/pk/1228.png' %}"><span
+                                ng-show="propertyName == 'kill_count'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Смерти" ng-click="sortBy('death_count')"><img
+                                src="https://static.divine-pride.net/images/items/item/7420.png"><span
+                                ng-show="propertyName == 'death_count'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Империумов срублено" ng-click="sortBy('emperium_kill')"><img
+                                src="https://static.divine-pride.net/images/items/item/714.png"><span
+                                ng-show="propertyName == 'emperium_kill'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Наибольший урон" ng-click="sortBy('top_damage')"><img
+                                src="https://static.divine-pride.net/images/items/item/2235.png"><span
+                                ng-show="propertyName == 'top_damage'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Всего нанесено урона" ng-click="sortBy('damage_done')"><img
+                                src="{% static 'images/ragnarok/data/pk/16007.png' %}"><span
+                                ng-show="propertyName == 'damage_done'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Получено урона" ng-click="sortBy('damage_received')"><img
+                                src="https://static.divine-pride.net/images/items/item/2108.png"><span
+                                ng-show="propertyName == 'damage_received'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="HP расход" ng-click="sortBy('hp_heal_potions')"><img
+                                src="https://static.divine-pride.net/images/items/item/504.png"><span
+                                ng-show="propertyName == 'hp_heal_potions'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="SP расход" ng-click="sortBy('sp_heal_potions')"><img
+                                src="https://static.divine-pride.net/images/items/item/505.png"><span
+                                ng-show="propertyName == 'sp_heal_potions'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="AD потрачено" ng-click="sortBy('acid_demostration')"><img
+                                src="https://static.divine-pride.net/images/items/item/7136.png"><span
+                                ng-show="propertyName == 'acid_demostration'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="EDP использовано" ng-click="sortBy('poison_bottles')"><img
+                                src="https://static.divine-pride.net/images/items/item/678.png"><span
+                                ng-show="propertyName == 'poison_bottles'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Нанесено урона по Империуму" ng-click="sortBy('emperium_damage')"><img
+                                src="https://static.divine-pride.net/images/items/item/714.png"><span
+                                ng-show="propertyName == 'emperium_damage'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Урона по баррикадам" ng-click="sortBy('barricade_damage')"><img
+                                src="https://static.divine-pride.net/images/items/item/1019.png"><span
+                                ng-show="propertyName == 'barricade_damage'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="SP потрачено" ng-click="sortBy('sp_used')"><img
+                                src="https://static.divine-pride.net/images/items/item/505.png"><span
+                                ng-show="propertyName == 'sp_used'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        <a href="" title="Использовано Spirit Ball" ng-click="sortBy('spiritb_used')"><img
+                                src="https://static.divine-pride.net/images/items/item/1819.png"><span
+                                ng-show="propertyName == 'spiritb_used'"
+                                ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span></a>
+                    </th>
+                    <th>
+                        Детали
+                    </th>
+                    </thead>
+                    <tbody ng-repeat="woe in data = (woeRanking | filter : search) | pagination: currentPage : numPerPage | orderBy:propertyName:reverse">
+                    <tr
+                            style="vertical-align: middle;">
+                        <td>#<b>[[$index+1]]</b></td>
+                        <td>
+                            <div class="char-top-head">
+                                <img src="http://chargen.alfheim.ro/characterhead/[[ woe.char_id__name ]]"/>
+                            </div>
+                            <a style="margin-left:5px;" href="/game/character/[[woe.char_id]]/profile/"><b>[[woe.char_id__name]]</b></a><br/>
+                            <span style="margin-left: 5px; cursor: pointer;" ng-click="update2(woe.char_id__class_field);">[[getClass(woe.char_id__class_field)]]</span>
+                        </td>
+                        <td>
+                            <img style="float:left;margin-top:12px;"
+                                 src="http://chargen.alfheim.ro/emblem/[[woe.char_id__guild_id]]">
+                        </td>
+                        <td>
+                            <span title="ГВ Очки">
+                                [[woe.score]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Убийства">
+                                [[woe.kill_count]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Смерти">
+                                [[woe.death_count]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Империумов срублено">
+                                [[woe.emperium_kill]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Наибольший урон">
+                                [[woe.top_damage]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Всего нанесено урона">
+                                [[woe.damage_done]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Получено урона">
+                                [[woe.damage_received]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="HP расход">
+                                [[woe.hp_heal_potions]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="SP расход">
+                                [[woe.sp_heal_potions]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="AD потрачено">
+                                [[woe.acid_demostration]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="EDP использовано">
+                                [[woe.poison_bottles]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Нанесено урона по Империуму">
+                                [[woe.emperium_damage]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Урона по баррикадам">
+                                [[woe.barricade_damage]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="SP потрачено">
+                                [[woe.sp_used]]
+                            </span>
+                        </td>
+                        <td>
+                            <span title="Использовано Spirit Ball">
+                                [[woe.spiritb_used]]
+                            </span>
+                        </td>
+                        <td>
+                            <a href="" ng-click="toggleDetails(woe.char_id)">Раскрыть</a>
+                        </td>
+                    </tr>
+                    <tr class="woe-details" ng-if="showDetails(woe.char_id)">
+                        <td colspan="18">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h4>Список убитых</h4>
+                                    <div class="woe-detail-container">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <th>Имя</th>
+                                            <th>Скилл</th>
+                                            <th>Время</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="kill in getKills(woe.char_id)">
+                                                <td>
+                                                    <img style="float:left;"
+                                 src="http://chargen.alfheim.ro/emblem/[[kill.killed_id__guild_id]]">
+                                                    <a ng-href="http://new.alfheim.ro/game/character/[[kill.killed_id]]/profile/">[[kill.killed
+                                                        | limitTo: 15]]</a>
+                                                </td>
+                                                <td>
+                                                    <img ng-click="getSkillRank(kill.skill, woe.char_id)" style="cursor:pointer;"
+                                                         ng-src="https://static.divine-pride.net/images/skill/[[kill.skill]].png">
+                                                </td>
+                                                <td>
+                                                    [[getTime(kill.time)]]
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4>Список смертей</h4>
+                                    <div class="woe-detail-container">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <th>Умер от</th>
+                                            <th>Скилл</th>
+                                            <th>Время</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="kill in getDeaths(woe.char_id)">
+                                                <td>
+                                                    <img style="float:left;"
+                                 src="http://chargen.alfheim.ro/emblem/[[kill.killer_id__guild_id]]">
+                                                    <a ng-href="http://new.alfheim.ro/game/character/[[kill.killer_id]]/profile/">[[kill.killer | limitTo: 15]]</a>
+                                                </td>
+                                                <td>
+                                                    <img ng-click="getSkillRank(kill.skill, woe.char_id)" style="cursor:pointer;"
+                                                         ng-src="https://static.divine-pride.net/images/skill/[[kill.skill]].png">
+                                                </td>
+                                                <td>
+                                                    [[getTime(kill.time)]]
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h4>Скиллов заюзано</h4>
+                                    <div class="woe-detail-container">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <th>Скилл</th>
+                                            <th>Кол-во</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="skill in getSkills(woe.char_id)">
+                                                <td>
+                                                    <img ng-click="getSkillRank(skill.skill_id, woe.char_id)" style="cursor:pointer;"
+                                                         ng-src="https://static.divine-pride.net/images/skill/[[skill.skill_id]].png">
+                                                </td>
+                                                <td>
+                                                    [[skill.count]]
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4>Статистика по скиллу <img ng-if="skillStatId[woe.char_id]"
+                                                                  ng-src="https://static.divine-pride.net/images/skill/[[getSkillByChar(woe.char_id)]].png">
+                                    </h4>
+                                    <small ng-if="!skillStatId[woe.char_id]">Для сравнения кликните на иконку нужного скилла</small>
+                                    <div ng-if="skillStatId[woe.char_id]" class="woe-detail-container">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <th>Имя</th>
+                                            <th>Скилл</th>
+                                            <th>Кол-во</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="skill in skillRanking[woe.char_id]">
+                                                <td>
+                                                    <img style="float:left;margin-top:12px;"
+                                                         ng-src="http://chargen.alfheim.ro/emblem/[[skill.char_id__guild_id]]">
+                                                    <a style="line-height: 45px;"
+                                                       ng-href="http://new.alfheim.ro/game/character/[[skill.char_id]]/profile/">[[skill.char_id__name
+                                                        | limitTo: 12]]</a>
+                                                </td>
+                                                <td>
+                                                    <img ng-src="https://static.divine-pride.net/images/skill/[[skill.skill_id]].png">
+                                                </td>
+                                                <td>
+                                                    [[skill.count]]
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul uib-pagination
+                    ng-model="currentPage"
+                    total-items="data.length"
+                    items-per-page="numPerPage"
+                    class="pagination-sm"
+                    next-text="Предыдущая страница"
+                    previous-text="Следующая страница"
+                    max-size="200"
+                    ng-change="pageChanged()">
+                </ul>
+            </div>
+        </div>
+    </section>
+    </body>
+{% endblock %}

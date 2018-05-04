@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load i18n %}
+{% load ragnarok %}
+{% load special %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+    {% block title %}
+        {% if PageTitle %}
+            <title>{{ PageTitle }}</title>
+        {% else %}
+            <title>{{ ServerName }} :: {{ user.username }} - {% trans "Control Panel" %} ::</title>
+        {% endif %}
+    {% endblock %}
+    <link href="{% static 'default/panel/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/bower_components/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/bower_components/morrisjs/morris.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/bower_components/chartist-js/dist/chartist.min.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css' %}" rel="stylesheet">
+    <link href="{% static 'default/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'default/panel/css/colors/default.css' %}" id="theme" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700|Anton|Play" rel="stylesheet">
+    <script charset="UTF-8" src="//cdn.sendpulse.com/28edd3380a1c17cf65b137fe96516659/js/push/9049a78b86cd8b6a57573353cf0fdd53_1.js" async></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .sendpulse-bar.sendpulse-prompt {
+            position: fixed !important;
+            top: 0;
+            transform: translateX(55%);
+            z-index: 5000;
+        }
+
+        .download-light {
+            background: url(../../../static/assets/img/download_light.png);
+            width: 240px;
+            height: 70px;
+        }
+
+        .download-light:hover {
+            background: url(../../../static/assets/img/download_light_hover.png);
+            width: 240px;
+            height: 70px;
+        }
+
+        .download-full {
+            background: url(../../../static/assets/img/download_full.png);
+            width: 240px;
+            height: 70px;
+        }
+
+        .download-full:hover {
+            background: url(../../../static/assets/img/download_full_hover.png);
+            width: 240px;
+            height: 70px;
+        }
+    </style>
+</head>
+<body class="fix-header">
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+    </svg>
+</div>
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-static-top m-b-0">
+        <div class="navbar-header" style="background: #3c4451;">
+            <div class="top-left-part">
+                <a class="logo" href="{% url '/' %}">
+                    <b>
+                        {{ ServerName }}
+                    </b>
+                </a>
+            </div>
+            <ul class="nav navbar-top-links navbar-right pull-right">
+                <li>
+                    <a class="profile-pic" href="{% url 'auth_logout' %}"> <img src="{% static 'default/img/noavatar.png' %}" alt="user-img" width="36" class="img-circle">
+                        <b class="hidden-xs">{{ user.username }}, {% trans "logout" %}</b>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="navbar-default sidebar" role="navigation" style="overflow: visible;">
+        <div class="slimScrollDiv" style="position: relative; overflow: visible; width: auto; height: 100%;">
+            <div class="sidebar-nav slimscrollsidebar" style="overflow-x: visible; overflow-y: hidden; width: auto; height: 100%;">
+                <div class="sidebar-head">
+                    <h3>
+                        <span class="fa-fw open-close">
+                            <i class="fa fa-bars hidden-xs"></i>
+                            <i class="fa fa-close visible-xs"></i>
+                        </span>
+                        <span class="hide-menu">{% trans "Navigation" %}</span>
+                    </h3>
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li style="padding: 70px 0 0;">
+                        <a href="{% url 'system_panel' %}" class="waves-effect">
+                            <i class="fa fa-home fa-fw" aria-hidden="true"></i>
+                            <span class="hide-menu">{% trans "Home" %}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'user_profile' %}" class="waves-effect">
+                            <i class="fa fa-user fa-fw" aria-hidden="true"></i>
+                            <span class="hide-menu">{% trans "Profile" %}</span>
+                        </a>
+                    </li>
+					<li>
+                        <a href="{% url 'promo_page' %}" class="waves-effect">
+                            <i class="fa fa-ticket fa-fw" aria-hidden="true"></i>
+                            <span class="hide-menu">{% trans "Активировать код" %}</span>
+                        </a>
+                    </li>
+                    <!--
+                    <li>
+                        <a href="{% url 'shop_main' %}" class="waves-effect">
+                            <i class="fa fa-shopping-bag fa-fw" aria-hidden="true"></i>
+                            <span class="hide-menu">{% trans "Shop" %}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'user_profile' %}" class="waves-effect">
+                            <i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i>
+                            <span class="hide-menu">{% trans "Cart" %}</span> <span class="badge badge-playro">0</span>
+                        </a>
+                    </li>
+                    -->
+                    <li>
+                        <a href="{% url 'auth_game_register' %}" class="waves-effect">
+                            <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                            <span class="hide-menu">{% trans "Add account" %}</span>
+                        </a>
+                    </li>
+                    {% if user.is_staff and user.is_superuser %}
+                        <li>
+                            <a href="/admin" class="waves-effect">
+                                <i class="fa fa-modx fa-fw" aria-hidden="true"></i>
+                                <span class="hide-menu">{% trans "Admin" %} (Q: {{ Queries }})</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <div class="center p-20">
+                    <a href data-toggle="modal" data-target="#characters-modal" class="btn btn-instagram btn-block waves-effect waves-light">{% trans "My characters" %}</a>
+                    <a href="javascript:void(0)" class="btn btn-dribbble btn-block waves-effect waves-light">
+                        {% trans "Account balance" %}: <span class="counter">{% get_donation_coins request.user %}</span> RUB
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block body %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">{% trans "Dashboard" %}</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <a data-toggle="modal" data-target="#donationsModal"
+                           class="btn btn-instagram pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">{% trans "Buy balance" %}</a>
+                        <ol class="breadcrumb">
+                            <li><a href="{% url 'system_panel' %}">{% trans "Dashboard" %}</a></li>
+                        </ol>
+                    </div>
+                </div>
+                {% include 'default/partials/messages.html' %}
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">{% trans "Total accounts" %}</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash"></div>
+                                </li>
+                                <li class="text-right"><i class="fa fa-arrow-up text-success"></i> <span class="counter text-success">{{ GameAccounts.count }}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">{% trans "Total characters" %}</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash2"></div>
+                                </li>
+                                <li class="text-right"><i class="fa fa-arrow-up text-purple"></i> <span class="counter text-purple">{{ Characters.count }}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">{% trans "Account balance" %}</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash3"></div>
+                                </li>
+                                <li class="text-right"><i class="fa fa-arrow-up text-info"></i> <span class="counter text-info">{% get_donation_coins request.user %}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% with GameAccounts.game as MyAccounts %}
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="white-box">
+                                <h3 class="box-title">{% trans "My game accounts" %}</h3>
+                                {% if MyAccounts %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>{% trans "Login" %}</th>
+                                                <th>{% trans "Last login" %}</th>
+                                                <th>{% trans "Last IP" %}</th>
+                                                <th>{% trans "Gender" %}</th>
+                                                <th>{% trans "Banned" %}</th>
+                                                <th>{% trans "Login count" %}</th>
+                                                <th>{% trans "Characters" %}</th>
+                                                <th>{% trans "Manage" %}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for Account in MyAccounts %}
+                                                <tr>
+                                                    <td>{{ Account.userid }}</td>
+                                                    <td>{{ Account.lastlogin|default:"00.00.0000 00:00:00" }}</td>
+                                                    <td>{{ Account.last_ip|default:"0.0.0.0" }}</td>
+                                                    <td>{{ Account.sex }}</td>
+                                                    <td>
+                                                        {% if Account.state %}
+                                                            До {{ Account.unban_time|date:"U" }}
+                                                        {% else %}
+                                                            {% trans "No" %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ Account.logincount }}</td>
+                                                    <td>0</td>
+                                                    <td>
+                                                        <a href="{% url 'game_account_settings' Account.account_id %}" class="btn btn-instagram">
+                                                            <i class="fa fa-wrench"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    {% trans "Аккаунтов нет! Создайте его " %} <a href="{% url 'auth_game_register' %}">{% trans "здесь" %}.</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+                {% with RecentActions.LatestLogins as RecentLogins %}
+                    <div class="row">
+                    <div class="col-md-12 col-lg-8 col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">{% trans "Recent activity" %}</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>{% trans "IP" %}</th>
+                                        <th>{% trans "Date" %}</th>
+                                        <th>{% trans "Browser" %}</th>
+                                        <th>{% trans "Device" %}</th>
+                                        <th>{% trans "Platform" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for Logins in RecentLogins %}
+                                        <tr data-toggle="tooltip" data-placement="top" title="{{ Logins.action }}">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ Logins.ip }}</td>
+                                            <td>{{ Logins.date }}</td>
+                                            <td>{{ Logins.agent }}</td>
+                                            <td>{{ Logins.device }}</td>
+                                            <td>{{ Logins.os }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+                {% with RecentActions.LatestActions as AllActions %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="panel">
+                            <div class="sk-chat-widgets">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">{% trans "Actions" %}</div>
+                                    <div class="panel-body">
+                                        <ul class="chatonline">
+                                            {% if AllActions %}
+                                                {% for Action in AllActions %}
+                                                    <li>
+                                                        <a href="javascript:void(0)"><i class="fa fa-pencil"></i>
+                                                            <span>
+                                                        {{ Action.action }}
+                                                        <small class="text-success">
+                                                            {{ Action.date }}
+                                                        </small>
+                                                    </span>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% else %}
+                                                <li>{% trans "No actions found" %}</li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+                </div>
+            </div>
+            <footer class="footer text-center">
+                2017 &copy; {{ ServerName }} - {% trans "Dashboard" %}
+            </footer>
+        </div>
+    {% endblock %}
+    {% include 'default/panel/modals/characters_modal.html' %}
+    {% include 'default/panel/modals/donation_main_modal.html' %}
+</div>
+<script src="{% static 'default/panel/bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'default/panel/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'default/panel/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+<script src="{% static 'default/panel/js/jquery.slimscroll.js' %}"></script>
+<script src="{% static 'default/panel/js/waves.js' %}"></script>
+<script src="{% static 'default/panel/bower_components/waypoints/lib/jquery.waypoints.js' %}"></script>
+<script src="{% static 'default/panel/bower_components/counterup/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'default/panel/bower_components/chartist-js/dist/chartist.min.js' %}"></script>
+<script src="{% static 'default/panel/bower_components/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'default/panel/js/custom.min.js' %}"></script>
+<script src="{% static 'default/panel/js/dashboard1.js' %}"></script>
+<script src="{% static 'default/panel/bower_components/toast-master/js/jquery.toast.js' %}"></script>
+</body>
+</html>

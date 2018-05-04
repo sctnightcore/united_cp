@@ -1,0 +1,87 @@
+{% extends 'default/panel/index.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">{% trans "Register" %}</h4></div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'system_panel' %}">{% trans "Dashboard" %}</a></li>
+                        <li class="active">{% trans "Register" %}</li>
+                    </ol>
+                </div>
+            </div>
+            {% include 'default/partials/messages.html' %}
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="white-box">
+                        {% if GameRegisterForm %}
+                            <form action="{% url 'auth_game_register' %}" method="POST" class="form-horizontal form-material">
+                                <div class="alert alert-dismissible alert-dark" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <strong>{% trans "Notice" %}:</strong> {% trans "Create game account here." %}
+                                </div>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                        {{ GameRegisterForm.username }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                        {{ GameRegisterForm.password }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                        {{ GameRegisterForm.gender }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button id="save" type="submit" class="btn btn-instagram">{% trans "Done" %}</button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <p>{% trans "Cannot show register form" %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="white-box">
+                        {% if GameRegisterForm %}
+                            <form action="{% url 'set_master_account' %}" method="POST" class="form-horizontal form-material">
+                                <div class="alert alert-dismissible alert-dark" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <strong>{% trans "Notice" %}:</strong> {% trans "Already have game account? Merge it with your master ID here." %}
+                                </div>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                        {{ SetMasterAccountForm.username }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="cols-sm-10">
+                                        {{ SetMasterAccountForm.password }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button id="save" type="submit" class="btn btn-instagram">{% trans "Merge" %}</button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <p>{% trans "Cannot show register form" %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

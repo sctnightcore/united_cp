@@ -1,0 +1,104 @@
+{% extends 'default/index.html' %}
+{% load static %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group register-info">
+                    <div class="list-group-item active">
+                        Notice
+                    </div>
+                    <div href="#" class="list-group-item">Click <b>view -> preview</b> to preview your guide</div>
+                    <div href="#" class="list-group-item">After you add guide, it will be put on moderation</div>
+                    <div href="#" class="list-group-item">Don't create guides that already exists!</div>
+                    <div href="#" class="list-group-item">
+                        Earn one of those rewards:
+                        {% for Reward in GuidesRewards %}
+                            <img src="{% static 'images/ragnarok/data/items/icons/' %}{{ Reward.reward_id }}.png">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <form action="{% url 'guides_add' %}" method="POST" class="guides-form" id="#guide_create_form">
+                    {% include 'default/partials/messages.html' %}
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group image-preview">
+                                    <label>
+                                        <input type="text" class="image-preview-filename form-control" disabled="disabled">
+                                    </label>
+                                    <div class="input-group-btn">
+                                        <!-- image-preview-clear button -->
+                                        <button type="button" class="btn btn-raised btn-default image-preview-clear" style="display:none;">
+                                            <span class="fa fa-remove"></span> Clear
+                                        </button>
+                                        <!-- image-preview-input -->
+                                        <div class="btn btn-raised btn-default image-preview-input">
+                                            <span class="fa fa-folder-open"></span>
+                                            <span class="image-preview-input-title">Browse</span>
+                                            {{ GuideCreateForm.main_image }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></span>
+                                    {{ GuideCreateForm.title }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-question fa-lg" aria-hidden="true"></i></span>
+                                    {{ GuideCreateForm.category }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-tags fa-lg" aria-hidden="true"></i></span>
+                                    {{ GuideTagForm.tag }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    {{ GuideCreateForm.description }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-raised btn-success">Create</button>
+                    <button type="reset" class="btn btn-lg btn-raised btn-warning">Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'bower_components/tinymce/tinymce.min.js' %}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea',
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            required: false,
+            preview_styles: true
+        });
+    </script>
+{% endblock %}

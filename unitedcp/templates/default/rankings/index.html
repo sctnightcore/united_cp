@@ -1,0 +1,80 @@
+{% extends 'default/index.html' %}
+{% load ragnarok %}
+{% load special %}
+{% block body %}
+    <div class="page">
+        <section class="character-ranking">
+            <!-- Banner -->
+            <div class="container">
+                <h1>Alfheim.RO – Рейтинг персонажей</h1>
+            </div>
+            <!-- /Banner -->
+
+            <div class="container">
+
+                <div class="row">
+                    <form method="POST" action="{% url 'ranking_index' %}">
+                        {% csrf_token %}
+                        <div class="form-horizontal mt-30 mb-40 pull-right rank-filter">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success  pull-right">Применить</button>
+                                {{ FilterForm.class_filter }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    {% for TOP3 in CharacterRanking|slice:":3" %}
+                        <div class="col-sm-4">
+                                <div class="feature angled-bg ">
+                                    <h3>{{ TOP3.name }} – # {{ forloop.counter }}</h3>
+                                    <div class="top-char-info">
+                                        <img class="top-char-info_image" src="http://chargen.alfheim.ro/avatar/{{ TOP3.name }}" alt="Class Image">
+                                        <div class="top-char-info_details">
+                                            <p>
+                                                <b>Уровень:</b> {{ TOP3.base_level }}/{{ TOP3.job_level }}
+                                                <b>Позиция:</b> №{{ forloop.counter }}
+                                            </p>
+                                            <p>{% get_guild_name TOP3.guild_id %}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    {% endfor %}
+                    <div class="mt20">
+                        <table class="table table-responsive table-striped table-hover">
+                            <thead class="thead-rankings">
+                            <tr>
+                                <th>#</th>
+                                <th>Player</th>
+                                <th>Guild</th>
+                                <th>Base EXP</th>
+                                <th>Job EXP</th>
+                            </tr>
+                            </thead>
+                            <tbody class="white-bg">
+                            {% for Char in CharacterRanking|slice:"3:" %}
+                                <tr class="tbody-rankings">
+                                    <td>{{ forloop.counter|add:+3 }}</td>
+                                    <td>
+                                        <div class="char-top-head">
+                                            <img src="http://chargen.alfheim.ro/characterhead/{{ Char.name }}" align="left"/>
+                                        </div>
+                                        <b>{{ Char.name }}</b> <br>{% get_class_name Char.class_field %} [{{ Char.base_level }}/{{ Char.job_level }}]
+                                    </td>
+                                    <td><img src="http://chargen.alfheim.ro/emblem/{{Char.guild_id }}"> {% get_guild_name Char.guild_id %}</td>
+                                    <td>{{ Char.base_exp }}</td>
+                                    <td>{{ Char.job_exp }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- /Footer -->
+        </section>
+    </div>
+{% endblock %}

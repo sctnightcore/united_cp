@@ -1,0 +1,268 @@
+{% load static %}
+{% load ragnarok %}
+{% load humanize %}
+{% load i18n %}
+<div class="modal fade" id="characters-modal" tabindex="-1" role="dialog" aria-labelledby="characters-modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title">{% trans "My characters" %}</p>
+            </div>
+            <div class="modal-body">
+                {% if Characters.count %}
+                    {% with Characters.main_character as Main %}
+                        {% if Main %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{% trans "Main character" %} - {{ Main.name }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-responsive">
+                                        <tbody>
+                                        <tr>
+                                            <td style="width: 30%"><b>{% trans "Base level" %}</b></td>
+                                            <td>
+                                                <div class="progress progress-lg">
+                                                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                                                         aria-valuenow="{{ Main.base_level }}"
+                                                         aria-valuemin="0"
+                                                         aria-valuemax="99"
+                                                         style="min-width: 4em; width: {{ Main.base_level }}%;">
+                                                        {{ Main.base_level }} / 99
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Job level" %}</b></td>
+                                            <td>
+                                                {% if Main.class_field < 4000 %}
+                                                    <div class="progress progress-lg">
+                                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                                             aria-valuenow="{{ Main.job_level }}"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="50"
+                                                             style="min-width: 4em; width: {{ Main.job_level }}%;">
+                                                            {{ Main.job_level }} / 50
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="progress progress-lg">
+                                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                                             aria-valuenow="{{ Main.job_level }}"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="70"
+                                                             style="min-width: 4em; width: {{ Main.job_level }}%;">
+                                                            {{ Main.job_level }} / 70
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Job" %}</b></td>
+                                            <td>{% get_class_name Main.class_field %}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Last map" %}</b></td>
+                                            <td>{{ Main.last_map|default:"prontera" }}, {{ Main.last_x }}, {{ Main.last_y }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Zeny" %}</b></td>
+                                            <td>{{ Main.zeny|intcomma }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Stats" %}</b></td>
+                                            <td>
+                                                <table class="table table-bordered table-hover">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td style="width: 20%"><b>STR</b></td>
+                                                        <td>{{ Main.str }}</td>
+                                                        <td><b>AGI</b></td>
+                                                        <td>{{ Main.agi }}</td>
+                                                        <td><b>VIT</b></td>
+                                                        <td>{{ Main.vit }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>INT</b></td>
+                                                        <td>{{ Main.int }}</td>
+                                                        <td><b>DEX</b></td>
+                                                        <td>{{ Main.dex }}</td>
+                                                        <td><b>LUK</b></td>
+                                                        <td>{{ Main.luk }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Online" %}</b></td>
+                                            <td>
+                                                {% if Main.online %}
+                                                    <span class="text-success"><i class="fa fa-check"></i></span>
+                                                {% else %}
+                                                    <span class="text-danger"><i class="fa fa-times"></i></span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="panel-footer">
+                                    <a href="{% url 'reset_position' Main.char_id %}" class="btn btn-primary">{% trans "Reset map" %}</a>
+                                    <a href="{% url 'reset_look' Main.char_id %}" class="btn btn-primary">{% trans "Reset look" %}</a>
+                                    <a href="{% url 'del_main_character' %}" class="btn btn-primary">Больше не основной</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                    {% with Characters.characters as CharList %}
+                        {% if CharList %}
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                {% for Char in CharList %}
+                                    {% if Char.name is not Characters.main_character.name %}
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="char-{{ Char.char_id }}">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ Char.char_id }}" aria-expanded="true"
+                                                       aria-controls="{{ Char.char_id }}">
+                                                        {% trans "Character" %} №{{ forloop.counter }} - {{ Char.name }}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="{{ Char.char_id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="char-{{ Char.char_id }}">
+                                                <div class="panel-body">
+                                                    <!--
+                                                    <img src="http://chargen.alfheim.ro/signature/{{ Char.name }}/" class="text-center">
+                                                    <table class="table table-responsive">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="width: 30%"><b>{% trans "Base level" %}</b></td>
+                                                            <td>
+                                                                <div class="progress progress-lg">
+                                                                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                                                                         aria-valuenow="{{ Char.base_level }}"
+                                                                         aria-valuemin="0"
+                                                                         aria-valuemax="99"
+                                                                         style="min-width: 4em; width: {{ Char.base_level }}%;">
+                                                                        {{ Char.base_level }} / 99
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>{% trans "Job level" %}</b></td>
+                                                            <td>
+                                                                {% if Char.class_field < 4000 %}
+                                                                    <div class="progress progress-lg">
+                                                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                                                             aria-valuenow="{{ Char.job_level }}"
+                                                                             aria-valuemin="0"
+                                                                             aria-valuemax="50"
+                                                                             style="min-width: 4em; width: {{ Char.job_level }}%;">
+                                                                            {{ Char.job_level }} / 50
+                                                                        </div>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="progress progress-lg">
+                                                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+                                                                             aria-valuenow="{{ Char.job_level }}"
+                                                                             aria-valuemin="0"
+                                                                             aria-valuemax="70"
+                                                                             style="min-width: 4em; width: {{ Char.job_level }}%;">
+                                                                            {{ Char.job_level }} / 70
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>{% trans "Job" %}</b></td>
+                                                            <td>{% get_class_name Char.class_field %}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>{% trans "Last map" %}</b></td>
+                                                            <td>{{ Char.last_map|default:"prontera" }}, {{ Char.last_x }}, {{ Char.last_y }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>{% trans "Zeny" %}</b></td>
+                                                            <td>{{ Char.zeny|intcomma }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>{% trans "Stats" %}</b></td>
+                                                            <td>
+                                                                <table class="table table-bordered table-hover">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 20%"><b>STR</b></td>
+                                                                        <td>{{ Char.str }}</td>
+                                                                        <td><b>AGI</b></td>
+                                                                        <td>{{ Char.agi }}</td>
+                                                                        <td><b>VIT</b></td>
+                                                                        <td>{{ Char.vit }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><b>INT</b></td>
+                                                                        <td>{{ Char.int }}</td>
+                                                                        <td><b>DEX</b></td>
+                                                                        <td>{{ Char.dex }}</td>
+                                                                        <td><b>LUK</b></td>
+                                                                        <td>{{ Char.luk }}</td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>{% trans "Online" %}</b></td>
+                                                            <td>
+                                                                {% if Char.online %}
+                                                                    <span class="text-success"><i class="fa fa-check"></i></span>
+                                                                {% else %}
+                                                                    <span class="text-danger"><i class="fa fa-times"></i></span>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    -->
+                                                    <p>Быстрые действия (Наведите мышкой чтобы узнать подробности):</p>
+                                                    <div class="btn-group">
+                                                        <a href="{% url 'reset_position' Char.char_id %}" class="btn btn-instagram" data-toggle="tooltip" data-placement="top"
+                                                           title="Переместить в {{ DefaultMap }}">
+                                                            <i class="fa fa-map-marker"></i>
+                                                        </a>
+                                                        <a href="{% url 'reset_look' Char.char_id %}" class="btn btn-instagram" data-toggle="tooltip" data-placement="top"
+                                                           title="Сбросить внешний вид">
+                                                            <i class="fa fa-paint-brush"></i>
+                                                        </a>
+                                                        <a href="{% url 'set_main_character' Char.char_id %}" class="btn btn-instagram" data-toggle="tooltip" data-placement="top"
+                                                           title="Пометить как основной">
+                                                            <i class="fa fa-check"></i>
+                                                        </a>
+                                                        <a href="{% url 'delete_character' Char.char_id Char.account_id_id %}" class="btn btn-danger" data-toggle="tooltip"
+                                                           data-placement="top" title="Удалить персонажа">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                        <a href="{% url 'character_profile' Char.char_id %}" class="btn btn-instagram" data-toggle="tooltip"
+                                                           data-placement="top" title="Перейти к управлению персонажем">
+                                                            <i class="fa fa-user-circle"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                {% else %}
+                    <p>{% trans "You don't have game characters. Please log in and create new one." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

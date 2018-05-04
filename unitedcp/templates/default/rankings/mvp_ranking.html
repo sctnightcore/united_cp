@@ -1,0 +1,86 @@
+{% extends 'default/index.html' %}
+{% load ragnarok %}
+{% load special %}
+{% load humanize %}
+{% block body %}
+    <div class="page">
+        <section class="character-ranking">
+            <!-- Banner -->
+            <div class="container">
+                <h1>Alfheim.RO – Рейтинг MVP убийц</h1>
+            </div>
+            <!-- /Banner -->
+
+            <div class="container">
+                {% with MvpRanking as CharacterRanking %}
+                    {% if CharacterRanking %}
+                        <div class="row">
+                            {% for TOP3 in CharacterRanking|slice:":3" %}
+                                <div class="col-sm-4">
+                                    <div class="feature angled-bg ">
+                                        <h3>{{ TOP3.char_id__name }} – # {{ forloop.counter }}</h3>
+                                        <div class="top-char-info">
+                                            <img class="top-char-info_image"
+                                                 src="http://chargen.alfheim.ro/avatar/{{ TOP3.char_id__name }}"
+                                                 alt="Class Image">
+                                            <div class="top-char-info_details">
+                                                <p>
+                                                    <b>Счет:</b> {{ TOP3.score}}
+                                                </p>
+                                                <p>{% get_guild_name TOP3.char_id__guild_id %}</p>
+                                                <p><b>Убийств MVP:</b> {{ TOP3.mvp_amount}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="mt20">
+                                <table class="table table-responsive table-striped table-hover">
+                                    <thead class="thead-rankings">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Player</th>
+                                        <th>Score</th>
+                                        <th>MVP count</th>
+                                        <th>Guild</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="white-bg">
+                                    {% for Char in CharacterRanking|slice:"3:" %}
+                                        <tr class="tbody-rankings">
+                                            <td>{{ forloop.counter|add:+3 }}</td>
+                                            <td>
+                                                <div class="char-top-head">
+                                                    <img src="http://chargen.alfheim.ro/characterhead/{{ Char.char_id__name }}"
+                                                         align="left"/>
+                                                </div>
+                                                <b>{{ Char.char_id__name }}</b> <br>{% get_class_name Char.char_id__class_field %}
+                                            </td>
+                                            <td>
+                                                {{  Char.score }}
+                                            </td>
+                                            <td>
+                                                {{  Char.mvp_amount }}
+                                            </td>
+                                            <td><img
+                                                    src="http://chargen.alfheim.ro/emblem/{{ Char.char_id__guild_id }}"> {% get_guild_name Char.char_id__guild_id %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            No players found.
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <!-- /Footer -->
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'default/rankings/index.html' %}
+{% load static %}
+{% load special %}
+{% load ragnarok %}
+
+{% block body %}
+    <section class="container" ng-controller="woeController">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="name_filter">Фильтр по имени</label>
+                <div class="youplay-input">
+                    <input id="name_filter" type="text" placeholder="Введите ник" ng-model="search.char_id__name">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="num">Всего [[data.length]] записи(-ей), по [[numPerPage]] на странице</label>
+                <div class="youplay-select" for="num">
+                    <select id="num" ng-options="disp as disp.size for disp in numsPerPage" ng-model="disp"
+                            ng-change="update(disp.size)"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="woeRanking">
+            <div ng-repeat="woe in data = (woeRanking | filter : search) | pagination: currentPage : numPerPage">
+                <div class="youplay-single-match">
+                    <div>
+                        <div class="pull-left">
+                            <h3 class="youplay-match-title">Статистика <b>[[woe.char_id__name]]</b> (#<b>[[$index+1]]</b>)</h3>
+                            <div>
+                                <p>Рейтинг: [[woe.score]]</p>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <div class="img img-responsive text-center">
+                                <img ng-src="../../static/images/ragnarok/data/jobs/images/[[woe.char_id__account_id__sex]]/[[woe.char_id__class_field]].gif">
+                            </div>
+                            <p>[[woe.char_id__guild__name]]</p>
+                            <p>[ [[woe.char_id__base_level]]/[[woe.char_id__job_level]] ]</p>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="2" class="text-center" bgcolor="#FFDAB9">Game Results</th>
+                            <th colspan="4" class="text-center" bgcolor="#FFDAB9">General Standings</th>
+                            <th colspan="3" class="text-center" bgcolor="#FFDAB9">Damage</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/1228.png' %}"> Kill</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7420.png' %}"> Death</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/714.png' %}"> Emperium</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/1019.png' %}"> Barricade</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/7429.png' %}"> G.stone</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/1160.png' %}"> Guardian</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2235.png' %}"> Top</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/16007.png' %}"> Done</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/2108.png' %}"> Recv</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[woe.kill_count]]</td>
+                            <td>[[woe.death_count]]</td>
+
+                            <td>[[woe.emperium_kill]]</td>
+                            <td>[[woe.barricade_kill]]</td>
+                            <td>[[woe.gstone_kill]]</td>
+                            <td>[[woe.guardian_kill]]</td>
+
+                            <td>[[woe.top_damage]]</td>
+                            <td>[[woe.damage_done]]</td>
+                            <td>[[woe.damage_received]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="9" class="text-center" bgcolor="#CDB7B5">Usable Items</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/pk/504.gif' %}"> HP</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/505.gif' %}"> SP</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7710.png' %}"> Gems</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/6114.png' %}"> Gems</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/715.png' %}"> Gems</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/676.gif' %}"> Total Zeny</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/1752.gif' %}"> Arrow</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/7136.gif' %}"> Bottle</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/678.gif' %}"> Bottle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[woe.hp_heal_potions]]</td>
+                            <td>[[woe.sp_heal_potions]]</td>
+                            <td>[[woe.blue_gemstones]]</td>
+                            <td>[[woe.red_gemstones]]</td>
+                            <td>[[woe.yellow_gemstones]]</td>
+                            <td>[[woe.zeny_used]]</td>
+                            <td>[[woe.ammo_used]]</td>
+                            <td>[[woe.acid_demostration]]</td>
+                            <td>[[woe.poison_bottles]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th colspan="9" class="text-center" bgcolor="#CDB7B5">Other</th>
+                        </tr>
+                        <tr>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/714.png' %}"> Emperium Damage</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/1019.png' %}"> Barricade Damage</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/7429.png' %}"> G.stone Damage</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/1160.png' %}"> Guardian Damage</th>
+                            <th><img src="{% static 'images/ragnarok/data/pk/505.gif' %}"> SP Used</th>
+                            <th><img src="{% static 'images/ragnarok/data/items/icons/1819.png' %}"> Spirit Ball used</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>[[woe.emperium_damage]]</td>
+                            <td>[[woe.barricade_damage]]</td>
+                            <td>[[woe.gstone_damage]]</td>
+                            <td>[[woe.guardian_damage]]</td>
+                            <td>[[woe.sp_used]]</td>
+                            <td>[[woe.spiritb_used]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <ul uib-pagination
+                ng-model="currentPage"
+                total-items="data.length"
+                items-per-page="numPerPage"
+                class="pagination-sm"
+                next-text="Вперед"
+                previous-text="Назад"
+                max-size="5"
+                ng-change="pageChanged()">
+            </ul>
+        </div>
+    </section>
+{% endblock %}

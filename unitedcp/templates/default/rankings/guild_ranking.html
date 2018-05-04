@@ -1,0 +1,55 @@
+{% extends 'default/rankings/index.html' %}
+{% load static %}
+{% load special %}
+{% load ragnarok %}
+
+{% block body %}
+    {% with GuildRanking as Guilds %}
+        {% if Guilds %}
+            <section class="youplay-features container mnb-30">
+                {% for topGuild in Guilds|slice:":3" %}
+                    <div class="col-sm-4">
+                        <div class="feature angled-bg">
+                            <h3># {{ forloop.counter }}</h3>
+                            <div style="min-height: 90px;">
+                                <p><img src="{% get_guild_image topGuild.guild_id %}"></p>
+                                <h4>{{ topGuild.guild_name }}</h4>
+                                <p>Level: [{{ topGuild.guild_lv }}]</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </section>
+            <section class="container">
+                <table class="table table-responsive table-striped">
+                    <thead class="thead-rankings">
+                    <tr>
+                        <th>#</th>
+                        <th>Guild</th>
+                        <th>Level</th>
+                        <th>Max members</th>
+                        <th>Average lv.</th>
+                        <th>Exp</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for Guild in Guilds|slice:"3:" %}
+                        <tr class="tbody-rankings">
+                            <td>{{ forloop.counter|add:+3 }}</td>
+                            <td><img src="{% get_guild_image topGuild.guild_id %}"> <b>{{ Guild.guild_name }}</b></td>
+                            <td>{{ Guild.guild_lv }}</td>
+                            <td>{{ Guild.max_member }}</td>
+                            <td>{{ Guild.average_lv }}</td>
+                            <td>{{ Guild.exp }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% else %}
+            <div class="container">
+                No guilds found.
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}

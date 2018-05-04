@@ -1,0 +1,1053 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-27 23:06-0400\n"
+"PO-Revision-Date: 2017-06-28 06:31+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Poedit 2.0.2\n"
+
+#: ragnarokcp/settings.py:138
+msgid "Russian"
+msgstr "Русский"
+
+#: ragnarokcp/settings.py:139
+msgid "English"
+msgstr "Английский"
+
+#: ragnarokcp/settings.py:140
+msgid "عربي"
+msgstr "Арабский"
+
+#: ragnarokcp/settings.py:193
+msgid "Play Ragnarok"
+msgstr ""
+
+#: ragnarokcp/settings.py:303
+msgid "Наши EDP бьют сильнее (на самом деле нет)"
+msgstr ""
+
+#: ragnarokcp/settings.py:304
+msgid ""
+"Это как будто сказать всем, что ты болен, а самому пойти на пляж, - только "
+"для РОшников."
+msgstr ""
+
+#: ragnarokcp/settings.py:305
+msgid "Как в 2007, только в 2017"
+msgstr ""
+
+#: ragnarokcp/settings.py:306
+msgid "При игре становится только лучше!"
+msgstr ""
+
+#: ragnarokcp/settings.py:307
+msgid "Наши Ханты распивают один авак на троих!"
+msgstr ""
+
+#: ragnarokcp/settings.py:308
+msgid "Играть саппортами - солидно!"
+msgstr ""
+
+#: ragnarokcp/settings.py:309
+msgid "У нас Кафры следят за Вами по GPS"
+msgstr ""
+
+#: unitedcp/accounts/forms.py:10 unitedcp/accounts/forms.py:14
+msgid "New E-Mail"
+msgstr "Новая почта"
+
+#: unitedcp/accounts/forms.py:24 unitedcp/accounts/forms.py:28
+#: unitedcp/ragnarok/forms.py:70 unitedcp/ragnarok/forms.py:74
+msgid "Old password"
+msgstr "Старый пароль"
+
+#: unitedcp/accounts/forms.py:36 unitedcp/accounts/forms.py:40
+#: unitedcp/ragnarok/forms.py:85
+msgid "New password"
+msgstr "Новый пароль"
+
+#: unitedcp/accounts/forms.py:95
+msgid "You can't enable notifications if you don't input phone number"
+msgstr "Вы не можете включить оповещения т.к. Вы не ввели номер телефона"
+
+#: unitedcp/accounts/models.py:14
+msgid "Donation Points"
+msgstr "Баланс"
+
+#: unitedcp/accounts/models.py:15
+msgid "Character ID"
+msgstr "ID"
+
+#: unitedcp/accounts/models.py:16
+msgid "Viewable Profile"
+msgstr "Профиль можно просматривать"
+
+#: unitedcp/accounts/models.py:17
+msgid "Avatar"
+msgstr "Аватар"
+
+#: unitedcp/accounts/models.py:18 unitedcp/forms.py:35
+msgid "Phone"
+msgstr "Телефон"
+
+#: unitedcp/accounts/models.py:19
+msgid "Receive Notifications"
+msgstr "Получать уведомления"
+
+#: unitedcp/accounts/views.py:61
+msgid "Profile successfully updated"
+msgstr "Профиль успешно обновлен"
+
+#: unitedcp/accounts/views.py:87
+msgid "Something went wrong, please contact with administration"
+msgstr "Что-то пошло не так, пожалуйста свяжитесь с администрацией"
+
+#: unitedcp/accounts/views.py:91
+msgid "Old password same as new"
+msgstr "Вы уже использовали этот пароль, выберите другой"
+
+#: unitedcp/accounts/views.py:97
+msgid "Password successfully changed"
+msgstr "Пароль успешно изменен"
+
+#: unitedcp/accounts/views.py:103 unitedcp/ragnarok/views.py:85
+msgid "Incorrect password"
+msgstr "Неправильный пароль"
+
+#: unitedcp/accounts/views.py:106
+msgid "Incorrect data, please try again."
+msgstr "Форма заполнена неверно, попробуйте еще раз."
+
+#: unitedcp/addons/announcements/models.py:8
+msgid "Purchase"
+msgstr "Купить"
+
+#: unitedcp/addons/announcements/models.py:9
+msgid "Sell"
+msgstr "Продать"
+
+#: unitedcp/addons/announcements/models.py:10
+msgid "Exchange"
+msgstr "Обменять"
+
+#: unitedcp/addons/announcements/models.py:11
+msgid "Other"
+msgstr "Другое"
+
+#: unitedcp/addons/announcements/models.py:16 unitedcp/staff/news/models.py:24
+msgid "Type"
+msgstr "Тип"
+
+#: unitedcp/addons/announcements/models.py:19
+msgid "Created date"
+msgstr "Дата создания"
+
+#: unitedcp/addons/announcements/models.py:20
+msgid "Updated date"
+msgstr "Дата обновления"
+
+#: unitedcp/addons/announcements/models.py:34 unitedcp/models.py:12
+#: unitedcp/staff/news/models.py:21
+#: unitedcp/templates/default/panel/index.html:189
+#: unitedcp/templates/default/panel/modals/recent_logins_modal.html:17
+msgid "Date"
+msgstr "Дата"
+
+#: unitedcp/donations/models.py:21
+#: unitedcp/templates/default/panel/main.html:74
+msgid "Donations"
+msgstr "Пожертвования"
+
+#: unitedcp/forms.py:9 unitedcp/forms.py:13 unitedcp/forms.py:66
+#: unitedcp/forms.py:71 unitedcp/ragnarok/forms.py:14
+#: unitedcp/ragnarok/forms.py:18 unitedcp/ragnarok/forms.py:95
+#: unitedcp/ragnarok/forms.py:99
+#: unitedcp/templates/default/panel/index.html:142
+msgid "Login"
+msgstr "Логин"
+
+#: unitedcp/forms.py:21 unitedcp/forms.py:25 unitedcp/forms.py:80
+#: unitedcp/forms.py:85 unitedcp/ragnarok/forms.py:26
+#: unitedcp/ragnarok/forms.py:30 unitedcp/ragnarok/forms.py:107
+#: unitedcp/ragnarok/forms.py:111
+msgid "Password"
+msgstr "Пароль"
+
+#: unitedcp/forms.py:40
+msgid "Your phone number"
+msgstr "Ваш номер телефона"
+
+#: unitedcp/forms.py:54 unitedcp/forms.py:58 unitedcp/forms.py:140
+#: unitedcp/forms.py:144
+msgid "E-Mail"
+msgstr "Почта"
+
+#: unitedcp/forms.py:76
+msgid "Your username must be between {} and {} characters"
+msgstr "Ваше имя пользователя должно быть между {} и {} символов"
+
+#: unitedcp/forms.py:90
+msgid "Your password must be between {} and {} characters"
+msgstr "Ваш пароль должен быть между {} и {} символов"
+
+#: unitedcp/forms.py:94 unitedcp/forms.py:99
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+#: unitedcp/forms.py:104
+msgid "Confirm password."
+msgstr "Подтвердите пароль."
+
+#: unitedcp/forms.py:108
+msgid "Rules"
+msgstr "Правила"
+
+#: unitedcp/forms.py:109
+msgid "I comply with rules"
+msgstr "Я согласен с правилами"
+
+#: unitedcp/forms.py:126
+msgid "You must accept server rules"
+msgstr "Вы должны согласиться с правилами"
+
+#: unitedcp/forms.py:129 unitedcp/ragnarok/forms.py:53
+#: unitedcp/ragnarok/forms.py:121
+#, python-brace-format
+msgid "Your username must be between {min_length} and {max_length} characters."
+msgstr ""
+"Ваше имя пользователя должно быть между {min_length} и {max_length} символов."
+
+#: unitedcp/forms.py:134
+msgid "Password doesn't match!"
+msgstr "Пароли не совпадают!"
+
+#: unitedcp/guides/forms.py:14
+msgid "Search guide"
+msgstr "Искать руководство"
+
+#: unitedcp/guides/forms.py:26
+msgid "Minimum search word length is 3"
+msgstr "Минимальное кол-во символов для поиска 3"
+
+#: unitedcp/guides/forms.py:47 unitedcp/staff/news/models.py:20
+msgid "Title"
+msgstr "Заголовок"
+
+#: unitedcp/guides/forms.py:69
+msgid "Description not found"
+msgstr "Описание не найдено"
+
+#: unitedcp/guides/forms.py:72
+msgid "Desciption too short"
+msgstr "Описание слишком короткое"
+
+#: unitedcp/guides/forms.py:79
+msgid "Title too short"
+msgstr "Заголовок слишком короткий"
+
+#: unitedcp/guides/forms.py:98
+msgid "Type tags separated by commas..."
+msgstr "Введите теги разделенные запятыми."
+
+#: unitedcp/guides/forms.py:107
+msgid "Tag too short"
+msgstr "Тег слишком короткий"
+
+#: unitedcp/guides/models.py:19
+msgid "File not supported!"
+msgstr "Файл не поддерживается!"
+
+#: unitedcp/guides/models.py:22
+msgid "File size too big"
+msgstr "Размер файла слишком большой"
+
+#: unitedcp/guides/views.py:66
+msgid "Guide '{}' successfully added, wait for moderation."
+msgstr "Руководство {} успешно отправлено на модерацию."
+
+#: unitedcp/guides/views.py:95
+msgid "Guide '{}' successfully applied."
+msgstr "Руководство {} успешно подтверждено."
+
+#: unitedcp/guides/views.py:105
+msgid "Guide not found."
+msgstr "Руководство не найдено."
+
+#: unitedcp/guides/views.py:109
+msgid "Guide on moderation."
+msgstr "Руководство на модерации."
+
+#: unitedcp/models.py:11
+msgid "Verification Key"
+msgstr "Ключ подтверждения"
+
+#: unitedcp/models.py:14
+msgid "Action"
+msgstr "Действие"
+
+#: unitedcp/models.py:15
+msgid "Value"
+msgstr "Количество"
+
+#: unitedcp/models.py:18
+msgid "User verification"
+msgstr "Активация пользователей"
+
+#: unitedcp/models.py:36
+msgid "Panel Logs"
+msgstr "Логи"
+
+#: unitedcp/models.py:53
+msgid "User Rewards"
+msgstr "Награды"
+
+#: unitedcp/ragnarok/forms.py:9
+msgid "Male"
+msgstr "Мужской"
+
+#: unitedcp/ragnarok/forms.py:10
+msgid "Female"
+msgstr "Женский"
+
+#: unitedcp/ragnarok/forms.py:38
+#: unitedcp/templates/default/panel/index.html:145
+msgid "Gender"
+msgstr "Пол"
+
+#: unitedcp/ragnarok/forms.py:42
+msgid "Select gender"
+msgstr "Выберите пол"
+
+#: unitedcp/ragnarok/forms.py:62 unitedcp/ragnarok/forms.py:130
+#, python-brace-format
+msgid "Use {max_length} characters or fewer for username."
+msgstr "Используйте {max_length} символов или меньше для имени пользователя."
+
+#: unitedcp/ragnarok/views.py:21
+msgid "Character not found"
+msgstr "Персонаж не найден"
+
+#: unitedcp/ragnarok/views.py:25 unitedcp/ragnarok/views.py:46
+msgid "You can't manage this account"
+msgstr "Вы не можете управлять этим аккаунтом"
+
+#: unitedcp/ragnarok/views.py:32
+msgid "Character {} moved to {}"
+msgstr "Персонаж {} перемещен в {}"
+
+#: unitedcp/ragnarok/views.py:42
+msgid "Character not found."
+msgstr "Персонаж не найден."
+
+#: unitedcp/ragnarok/views.py:68
+msgid "Account not found."
+msgstr "Аккаунт не найден."
+
+#: unitedcp/ragnarok/views.py:72
+msgid "You can't manage this account."
+msgstr "Вы не можете управлять этим аккаунтом."
+
+#: unitedcp/ragnarok/views.py:82
+msgid "New password same as old"
+msgstr "Вы уже использовали этот пароль, выберите другой"
+
+#: unitedcp/ragnarok/views.py:87
+msgid "Password has successfully been changed"
+msgstr "Пароль успешно изменен"
+
+#: unitedcp/ragnarok/views.py:97
+msgid "Main character updated"
+msgstr "Основной персонаж обновлен"
+
+#: unitedcp/ragnarok/views.py:117
+msgid "This login already exist."
+msgstr "Пользователь уже существует."
+
+#: unitedcp/ragnarok/views.py:122
+msgid "Game account successfully created."
+msgstr "Игровой аккаунт успешно создан."
+
+#: unitedcp/ragnarok/views.py:146
+msgid "Game account doesn't found."
+msgstr "Игровой аккаунт не найден."
+
+#: unitedcp/ragnarok/views.py:151
+msgid "Game account added."
+msgstr "Игровой аккаунт добавлен."
+
+#: unitedcp/ragnarok/views.py:153
+msgid "This account already have master id."
+msgstr "Этот аккаунт уже имеет master ID."
+
+#: unitedcp/ragnarok/views.py:155
+msgid "Incorrect password."
+msgstr "Неправильный пароль."
+
+#: unitedcp/staff/news/models.py:15
+msgid "Patch Note"
+msgstr "Обновление"
+
+#: unitedcp/staff/news/models.py:16
+msgid "Event"
+msgstr "Мероприятие"
+
+#: unitedcp/staff/news/models.py:17
+msgid "News"
+msgstr "Новости"
+
+#: unitedcp/staff/news/models.py:22
+msgid "Description"
+msgstr "Описание"
+
+#: unitedcp/staff/news/models.py:23
+msgid "Main Image"
+msgstr "Основное изображение"
+
+#: unitedcp/staff/news/models.py:25
+msgid "Author"
+msgstr "Автор"
+
+#: unitedcp/staff/news/models.py:26
+msgid "Source url"
+msgstr "Источник"
+
+#: unitedcp/staff/news/models.py:27
+msgid "Publish"
+msgstr "Опубликовать"
+
+#: unitedcp/staff/news/models.py:34
+msgid "No author"
+msgstr "Нет автора"
+
+#: unitedcp/staff/news/models.py:40
+msgid "Images"
+msgstr "Изображения"
+
+#: unitedcp/staff/news/models.py:48
+msgid "Tags"
+msgstr "Теги"
+
+#: unitedcp/staff/news/views.py:68
+msgid "Article {} successfully added!"
+msgstr "Новость {} добавлена!"
+
+#: unitedcp/templates/default/auth/auth_login_modal.html:8
+msgid "Authentication"
+msgstr "Авторизация"
+
+#: unitedcp/templates/default/auth/auth_login_modal.html:34
+msgid "Sign in"
+msgstr "Войти"
+
+#: unitedcp/templates/default/auth/auth_login_modal.html:39
+msgid "Login form cannot be shown, please move to"
+msgstr "Невозможно отобразить форму входа, пожалуйста перейдите"
+
+#: unitedcp/templates/default/auth/auth_login_modal.html:39
+#: unitedcp/templates/default/auth/reset_password_modal.html:30
+#: unitedcp/templates/default/index.html:43
+#: unitedcp/templates/default/index.html:294
+#: unitedcp/templates/default/panel/index.html:67
+#: unitedcp/templates/default/panel/modals/change_email_modal.html:31
+#: unitedcp/templates/default/panel/modals/change_password_modal.html:40
+msgid "Home"
+msgstr "Главная"
+
+#: unitedcp/templates/default/auth/auth_login_modal.html:44
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: unitedcp/templates/default/auth/auth_login_modal.html:45
+msgid "Don't have an account?"
+msgstr "У Вас нет аккаунта?"
+
+#: unitedcp/templates/default/auth/master_account_register.html:9
+msgid "Create master account"
+msgstr "Создать мастер аккаунт"
+
+#: unitedcp/templates/default/auth/master_account_register.html:50
+#: unitedcp/templates/default/index.html:269
+msgid "Sign up"
+msgstr "Зарегистрироваться"
+
+#: unitedcp/templates/default/auth/reset_password_modal.html:24
+msgid "Reset password"
+msgstr "Сбросить пароль"
+
+#: unitedcp/templates/default/auth/reset_password_modal.html:30
+msgid "Password reset form cannot be shown, please move to"
+msgstr "Невозможно отобразить форму сброса пароля, пожалуйста перейдите"
+
+#: unitedcp/templates/default/index.html:46
+#: unitedcp/templates/default/panel/index.html:14
+msgid "Control Panel"
+msgstr "Личный кабинет"
+
+#: unitedcp/templates/default/index.html:48
+msgid "My account"
+msgstr "Мой аккаунт"
+
+#: unitedcp/templates/default/index.html:49
+msgid "Logout"
+msgstr "Выход"
+
+#: unitedcp/templates/default/index.html:53
+msgid "Community"
+msgstr "Сообщество"
+
+#: unitedcp/templates/default/index.html:54
+#: unitedcp/templates/default/index.html:295
+msgid "Downloads"
+msgstr "Загрузки"
+
+#: unitedcp/templates/default/index.html:56
+#: unitedcp/templates/default/index.html:298
+msgid "Database"
+msgstr "База данных"
+
+#: unitedcp/templates/default/index.html:58
+msgid "Server info"
+msgstr "Информация"
+
+#: unitedcp/templates/default/index.html:59
+#: unitedcp/templates/default/index.html:297
+msgid "Rankings"
+msgstr "Рейтинги"
+
+#: unitedcp/templates/default/index.html:60
+msgid "Monsters"
+msgstr "Монстры"
+
+#: unitedcp/templates/default/index.html:61
+msgid "Items"
+msgstr "Предметы"
+
+#: unitedcp/templates/default/index.html:62
+msgid "Maps"
+msgstr "Локации"
+
+#: unitedcp/templates/default/index.html:63
+msgid "Announces"
+msgstr "Объявления"
+
+#: unitedcp/templates/default/index.html:64
+msgid "Guides"
+msgstr "Руководства"
+
+#: unitedcp/templates/default/index.html:84
+msgid "Welcome to the"
+msgstr "Добро пожаловать на"
+
+#: unitedcp/templates/default/index.html:86
+msgid "Enjoy the adventures"
+msgstr "Присоединяйтесь к приключениям"
+
+#: unitedcp/templates/default/index.html:86
+msgid "right now"
+msgstr "прямо сейчас"
+
+#: unitedcp/templates/default/index.html:88
+msgid "Welcome back"
+msgstr "С возвращением"
+
+#: unitedcp/templates/default/index.html:104
+msgid "Sign up or log in"
+msgstr "Зарегистрируйтесь или войдите"
+
+#: unitedcp/templates/default/index.html:120
+msgid "EPISODE"
+msgstr "ЭПИЗОД"
+
+#: unitedcp/templates/default/index.html:129
+msgid "MID RATE"
+msgstr "МИД РЕЙТ"
+
+#: unitedcp/templates/default/index.html:138
+msgid "PRE-RENEWAL"
+msgstr "ПРЕ-РЕНЕВАЛ"
+
+#: unitedcp/templates/default/index.html:147
+msgid "PLAY FOR FREE"
+msgstr "ИГРАЙТЕ БЕСПЛАТНО"
+
+#: unitedcp/templates/default/index.html:158
+msgid "PLAY - PLEASANT"
+msgstr "ИГРАТЬ - ПРИЯТНО"
+
+#: unitedcp/templates/default/index.html:167
+msgid "EASY TO START"
+msgstr "ЛЕГКО НАЧАТЬ"
+
+#: unitedcp/templates/default/index.html:176
+msgid "REWARDS"
+msgstr "НАГРАДЫ"
+
+#: unitedcp/templates/default/index.html:185
+msgid "EVENTS"
+msgstr "МЕРОПРИЯТИЯ"
+
+#: unitedcp/templates/default/index.html:196
+msgid "Server will open in"
+msgstr "Сервер откроется через"
+
+#: unitedcp/templates/default/index.html:208
+msgid "statistics"
+msgstr "статистика"
+
+#: unitedcp/templates/default/index.html:209
+msgid "Join our server and enjoy a lot of cool and intresting stuff"
+msgstr "За время существования сервера произошло много интересного"
+
+#: unitedcp/templates/default/index.html:219
+msgid "Accounts"
+msgstr "Аккаунтов"
+
+#: unitedcp/templates/default/index.html:228
+msgid "Bosses killed"
+msgstr "Боссов убито"
+
+#: unitedcp/templates/default/index.html:237
+msgid "War of Emperium"
+msgstr "Войн гильдий"
+
+#: unitedcp/templates/default/index.html:246
+msgid "Hours spent"
+msgstr "Часов потрачено"
+
+#: unitedcp/templates/default/index.html:256
+msgid "Fast register"
+msgstr "Быстрая регистрация"
+
+#: unitedcp/templates/default/index.html:285
+msgid "About"
+msgstr "О"
+
+#: unitedcp/templates/default/index.html:292
+msgid "Links"
+msgstr "Ссылки"
+
+#: unitedcp/templates/default/index.html:296
+msgid "Registration"
+msgstr "Регистрация"
+
+#: unitedcp/templates/default/index.html:304
+msgid "Contact us"
+msgstr "Свяжитесь с нами"
+
+#: unitedcp/templates/default/index.html:308
+#: unitedcp/templates/default/panel/main.html:57
+msgid "Support"
+msgstr "Поддержка"
+
+#: unitedcp/templates/default/index.html:315
+msgid "Select language"
+msgstr "Выберите язык"
+
+#: unitedcp/templates/default/index.html:326
+msgid "Change"
+msgstr "Изменить"
+
+#: unitedcp/templates/default/index.html:337
+msgid "All rights reserved"
+msgstr "Все права защищены"
+
+#: unitedcp/templates/default/index.html:372
+msgid "days"
+msgstr "дней"
+
+#: unitedcp/templates/default/index.html:372
+msgid "hours"
+msgstr "часов"
+
+#: unitedcp/templates/default/index.html:372
+msgid "minutes"
+msgstr "минут"
+
+#: unitedcp/templates/default/index.html:372
+msgid "seconds"
+msgstr "секунд"
+
+#: unitedcp/templates/default/panel/create_game_account.html:9
+#: unitedcp/templates/default/panel/create_game_account.html:13
+msgid "Register"
+msgstr "Регистрация"
+
+#: unitedcp/templates/default/panel/create_game_account.html:12
+#: unitedcp/templates/default/panel/index.html:88
+#: unitedcp/templates/default/panel/index.html:93
+#: unitedcp/templates/default/panel/index.html:241
+#: unitedcp/templates/default/panel/profile.html:12
+msgid "Dashboard"
+msgstr "Личный кабинет"
+
+#: unitedcp/templates/default/panel/create_game_account.html:27
+#: unitedcp/templates/default/panel/create_game_account.html:62
+msgid "Notice"
+msgstr "Уведомление"
+
+#: unitedcp/templates/default/panel/create_game_account.html:27
+msgid "Create game account here."
+msgstr "Создайте игровой аккаунт здесь."
+
+#: unitedcp/templates/default/panel/create_game_account.html:46
+msgid "Done"
+msgstr "Готово"
+
+#: unitedcp/templates/default/panel/create_game_account.html:50
+#: unitedcp/templates/default/panel/create_game_account.html:80
+#: unitedcp/templates/default/panel/modals/create_game_account_modal.html:47
+msgid "Cannot show register form"
+msgstr "Невозможно отобразить форму регистрации"
+
+#: unitedcp/templates/default/panel/create_game_account.html:62
+msgid "Already have game account? Merge it with your master ID here."
+msgstr ""
+"У Вас уже есть игровой аккаунт? Присоедините его к своему master ID здесь."
+
+#: unitedcp/templates/default/panel/create_game_account.html:76
+msgid "Merge"
+msgstr "Присоединить"
+
+#: unitedcp/templates/default/panel/index.html:50
+msgid "Search"
+msgstr "Искать"
+
+#: unitedcp/templates/default/panel/index.html:55
+msgid "logout"
+msgstr "выход"
+
+#: unitedcp/templates/default/panel/index.html:64
+msgid "Navigation"
+msgstr "Навигация"
+
+#: unitedcp/templates/default/panel/index.html:69
+#: unitedcp/templates/default/panel/main.html:28
+#: unitedcp/templates/default/panel/profile.html:9
+#: unitedcp/templates/default/panel/profile.html:13
+#: unitedcp/templates/default/panel/profile.html:92
+msgid "Profile"
+msgstr "Профиль"
+
+#: unitedcp/templates/default/panel/index.html:70
+msgid "Shop"
+msgstr "Магазин"
+
+#: unitedcp/templates/default/panel/index.html:71
+msgid "Cart"
+msgstr "Корзина"
+
+#: unitedcp/templates/default/panel/index.html:72
+msgid "Add account"
+msgstr "Добавить аккаунт"
+
+#: unitedcp/templates/default/panel/index.html:77
+#: unitedcp/templates/default/panel/main.html:45
+#: unitedcp/templates/default/panel/modals/characters_modal.html:10
+msgid "My characters"
+msgstr "Мои персонажи"
+
+#: unitedcp/templates/default/panel/index.html:91
+msgid "Buy balance"
+msgstr "Пополнить счет"
+
+#: unitedcp/templates/default/panel/index.html:101
+msgid "Total accounts"
+msgstr "Всего аккаунтов"
+
+#: unitedcp/templates/default/panel/index.html:112
+msgid "Total characters"
+msgstr "Всего персонажей"
+
+#: unitedcp/templates/default/panel/index.html:123
+msgid "Account balance"
+msgstr "Баланс"
+
+#: unitedcp/templates/default/panel/index.html:137
+msgid "My game accounts"
+msgstr "Мои игровые аккаунты"
+
+#: unitedcp/templates/default/panel/index.html:143
+msgid "Last login"
+msgstr "Последний вход"
+
+#: unitedcp/templates/default/panel/index.html:144
+msgid "Last IP"
+msgstr "Последний IP"
+
+#: unitedcp/templates/default/panel/index.html:146
+msgid "Banned"
+msgstr "Заблокирован"
+
+#: unitedcp/templates/default/panel/index.html:147
+msgid "Login count"
+msgstr "Кол-во входов"
+
+#: unitedcp/templates/default/panel/index.html:148
+msgid "Characters"
+msgstr "Персонажей"
+
+#: unitedcp/templates/default/panel/index.html:149
+msgid "Manage"
+msgstr "Настройки"
+
+#: unitedcp/templates/default/panel/index.html:163
+msgid "No"
+msgstr "Нет"
+
+#: unitedcp/templates/default/panel/index.html:182
+#: unitedcp/templates/default/panel/modals/recent_logins_modal.html:8
+msgid "Recent activity"
+msgstr "Недавняя активность"
+
+#: unitedcp/templates/default/panel/index.html:188
+msgid "IP"
+msgstr "IP"
+
+#: unitedcp/templates/default/panel/index.html:190
+#: unitedcp/templates/default/panel/modals/recent_logins_modal.html:18
+msgid "Browser"
+msgstr "Браузер"
+
+#: unitedcp/templates/default/panel/index.html:191
+#: unitedcp/templates/default/panel/modals/recent_logins_modal.html:19
+msgid "Device"
+msgstr "Устройство"
+
+#: unitedcp/templates/default/panel/index.html:192
+msgid "Platform"
+msgstr "Платформа"
+
+#: unitedcp/templates/default/panel/index.html:217
+msgid "Actions"
+msgstr "Действия"
+
+#: unitedcp/templates/default/panel/main.html:11
+msgid "Security"
+msgstr "Безопасность"
+
+#: unitedcp/templates/default/panel/main.html:12
+msgid "Change your settings"
+msgstr "Изменить настройки"
+
+#: unitedcp/templates/default/panel/main.html:19
+msgid "Change E-Mail"
+msgstr "Изменить почту"
+
+#: unitedcp/templates/default/panel/main.html:22
+msgid "Change password"
+msgstr "Изменить пароль"
+
+#: unitedcp/templates/default/panel/main.html:25
+msgid "Recent devices"
+msgstr "Последние устройства"
+
+#: unitedcp/templates/default/panel/main.html:34
+msgid "Game accounts"
+msgstr "Игровые аккаунты"
+
+#: unitedcp/templates/default/panel/main.html:35
+msgid "Enjoy the game"
+msgstr "Присоединяйтесь к игре"
+
+#: unitedcp/templates/default/panel/main.html:42
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+#: unitedcp/templates/default/panel/main.html:48
+msgid "Manage accounts"
+msgstr "Управлять аккаунтами"
+
+#: unitedcp/templates/default/panel/main.html:51
+msgid "Server rules"
+msgstr "Правила сервера"
+
+#: unitedcp/templates/default/panel/main.html:58
+msgid "Need help?"
+msgstr "Нужна помощь?"
+
+#: unitedcp/templates/default/panel/main.html:65
+msgid "My tickets"
+msgstr "Мои запросы"
+
+#: unitedcp/templates/default/panel/main.html:68
+msgid "Create ticket"
+msgstr "Создать запрос"
+
+#: unitedcp/templates/default/panel/main.html:71
+msgid "F.A.Q"
+msgstr "Вопрос-ответ"
+
+#: unitedcp/templates/default/panel/modals/change_email_modal.html:25
+#: unitedcp/templates/default/panel/modals/change_password_modal.html:34
+msgid "Save"
+msgstr "Сохранить"
+
+#: unitedcp/templates/default/panel/modals/change_email_modal.html:31
+msgid "E-Mail change form cannot be shown, please move to"
+msgstr "Невозможно отобразить форму смены почты, пожалуйста перейдите"
+
+#: unitedcp/templates/default/panel/modals/change_password_modal.html:40
+msgid "Password change form cannot be shown, please move to"
+msgstr "Невозможно отобразить форму смены пароля, пожалуйста перейдите"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:18
+msgid "Main character"
+msgstr "Основной персонаж"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:24
+#: unitedcp/templates/default/panel/modals/characters_modal.html:139
+msgid "Base level"
+msgstr "Базовый уровень"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:38
+#: unitedcp/templates/default/panel/modals/characters_modal.html:153
+msgid "Job level"
+msgstr "Профессиональный уровень"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:64
+#: unitedcp/templates/default/panel/modals/characters_modal.html:179
+msgid "Job"
+msgstr "Класс"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:68
+#: unitedcp/templates/default/panel/modals/characters_modal.html:183
+msgid "Last map"
+msgstr "Последняя локация"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:72
+#: unitedcp/templates/default/panel/modals/characters_modal.html:187
+msgid "Zeny"
+msgstr "Зени"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:76
+#: unitedcp/templates/default/panel/modals/characters_modal.html:191
+msgid "Stats"
+msgstr "Характеристики"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:101
+#: unitedcp/templates/default/panel/modals/characters_modal.html:216
+msgid "Online"
+msgstr "В игре"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:114
+#: unitedcp/templates/default/panel/modals/characters_modal.html:229
+msgid "Reset map"
+msgstr "Сбросить локацию"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:115
+#: unitedcp/templates/default/panel/modals/characters_modal.html:230
+msgid "Reset look"
+msgstr "Сбросить внешний вид"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:130
+msgid "Character"
+msgstr "Персонаж"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:231
+msgid "Make main"
+msgstr "Сделать основным"
+
+#: unitedcp/templates/default/panel/modals/characters_modal.html:241
+msgid "You don't have game characters. Please log in and create new one."
+msgstr "У Вас нет персонажей."
+
+#: unitedcp/templates/default/panel/modals/create_game_account_modal.html:8
+msgid "Create game account"
+msgstr "Создать игровой аккаунт"
+
+#: unitedcp/templates/default/panel/modals/create_game_account_modal.html:41
+msgid "Create"
+msgstr "Создать"
+
+#: unitedcp/templates/default/panel/modals/recent_logins_modal.html:20
+msgid "OS"
+msgstr "ОС"
+
+#: unitedcp/templates/default/panel/modals/recent_logins_modal.html:37
+msgid "No activity found"
+msgstr "Недавняя активность не найдена"
+
+#: unitedcp/templates/default/panel/profile.html:66
+msgid "Additionally"
+msgstr "Дополнительно"
+
+#: unitedcp/templates/default/panel/profile.html:71
+msgid "Open profile"
+msgstr "Открыть профиль"
+
+#: unitedcp/templates/default/panel/profile.html:77
+msgid "Receive phone notifications"
+msgstr "Получать уведомления по телефону"
+
+#: unitedcp/templates/default/panel/profile.html:84
+msgid "Update"
+msgstr "Обновить"
+
+#: unitedcp/views.py:45
+msgid "Invalid credentials. Be sure that your account activated"
+msgstr "Неправильный логин или пароль."
+
+#: unitedcp/views.py:73
+msgid "User already exists"
+msgstr "Пользователь уже существует"
+
+#: unitedcp/views.py:94
+msgid "User successfully registered!"
+msgstr ""
+"Аккаунт успешно зарегистрирован! "
+
+#: unitedcp/views.py:173
+msgid "Incorrect link"
+msgstr "Неправильная ссылка"
+
+#: unitedcp/views.py:177
+msgid "Key time expires."
+msgstr "Время ключа истекло."
+
+#: unitedcp/views.py:182
+msgid "This account already active."
+msgstr "Этот аккаунт уже активен."
+
+#: unitedcp/views.py:188
+msgid "User successfully activated."
+msgstr "Пользователь успешно активирован."
+
+#: unitedcp/views.py:206
+msgid "E-Mail successfully changed."
+msgstr "Почта успешно изменена."
+
+#: unitedcp/views.py:208
+msgid "Unknown action."
+msgstr "Неизвестное действие."
+
+#~ msgid "Please, confirm password."
+#~ msgstr "Пожалуйста, подтвердите свой пароль."
+
+#, fuzzy
+#~| msgid "Your username must be between {} and {} characters"
+#~ msgid "Your username must contain at least {min_length} characters."
+#~ msgstr "Ваше имя пользователя должно быть между {} и {} символов"
+
+#, fuzzy
+#~| msgid "Your username must be between {} and {} characters"
+#~ msgid "Your username must be less {max_length} characters."
+#~ msgstr "Ваше имя пользователя должно быть между {} и {} символов"
+
+#, fuzzy
+#~| msgid "Your password must be between {} and {} characters"
+#~ msgid "Your password must be less {max_length} characters."
+#~ msgstr "Ваш пароль должен быть между {} и {} символов"

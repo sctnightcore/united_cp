@@ -1,0 +1,82 @@
+{% extends 'default/panel/index.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">{% trans "Profile" %}</h4></div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'system_panel' %}">{% trans "Dashboard" %}</a></li>
+                        <li class="active">{% trans "Profile" %}</li>
+                    </ol>
+                </div>
+            </div>
+            {% include 'default/partials/messages.html' %}
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <div class="white-box">
+                        <form class="form-horizontal form-material" action="{% url 'user_profile' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-md-12">{{ MainProfileForm.first_name.label }}</label>
+                                <div class="col-md-12">
+                                    {{ MainProfileForm.first_name }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">{{ MainProfileForm.last_name.label }}</label>
+                                <div class="col-md-12">
+                                    {{ MainProfileForm.last_name }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="example-email" class="col-md-12">{{ MainProfileForm.email.label }}</label>
+                                <div class="col-md-12">
+                                    {{ MainProfileForm.email }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">{{ MainProfileForm.password.label }}</label>
+                                <div class="col-md-12">
+                                    {{ MainProfileForm.password }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">{{ ProfileForm.phone.label }}</label>
+                                <div class="col-md-12">
+                                    {{ ProfileForm.phone }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12" for="checkboxes">{% trans "Additionally" %}</label>
+                                <div class="col-md-12">
+                                    <div>
+                                        <label for="{{ ProfileForm.viewable.id_for_label }}">
+                                            {{ ProfileForm.viewable }}
+                                            {% trans "Open profile" %}
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label for="{{ ProfileForm.receive_notifications.id_for_label }}">
+                                            {{ ProfileForm.receive_notifications }}
+                                            {% trans "Receive phone notifications" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-instagram" type="submit">{% trans "Update" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer text-center"> 2017 &copy; {{ ServerName }} - {% trans "Profile" %}</footer>
+    </div>
+{% endblock %}

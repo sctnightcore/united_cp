@@ -1,0 +1,135 @@
+{% extends 'default/index.html' %}
+{% load static %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <section>
+                <div class="wizard">
+                    <div class="text-center">
+                        <h1 class="main-heading">Welcome to Guides section!</h1>
+                        <p>Only 4 steps to earn rewards</p>
+                    </div>
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Write guides">
+                                <span class="round-tab">
+                                    <i class="fa fa-pencil"></i>
+                                </span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Wait for moderation">
+                                <span class="round-tab">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Claim rewards">
+                                <span class="round-tab">
+                                    <i class="fa fa-check"></i>
+                                </span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Be happy">
+                                <span class="round-tab">
+                                    <i class="fa fa-smile-o"></i>
+                                </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="step1">
+                            <div class="text-center">
+                                <h3 class="main-heading">Write guide</h3>
+                                <p>Start writing guide right now and earn one of those rewards:</p>
+                                {% for Reward in GuidesRewards %}
+                                    <img src="{% static 'images/ragnarok/data/items/icons/' %}{{ Reward.reward_id }}.png">
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step2">
+                            <div class="text-center">
+                                <h3 class="main-heading">Wait for moderation</h3>
+                                <p>After your guide is done, you must wait for moderation, this action takes 1-24hours</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <div class="text-center">
+                                <h3 class="main-heading">Claim your rewards</h3>
+                                <p>When moderation is done, your rewards automatically stores in your storage</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step4">
+                            <div class="text-center">
+                                <h3 class="main-heading">Be happy</h3>
+                                <p>Congratulations! You are - guide writer! Thank you!</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <form method="POST" role="form" action="{% url 'guides_main' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="cols-md-8">
+                        <a href="{% url 'guides_add' %}" class="btn btn-lg btn-raised btn-info"><i class="fa fa-plus"></i> Create new guide</a>
+                        <div class="input-group">
+                            {{ SearchForm.guide_search }}
+                            <span class="input-group-addon">
+                                <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <button type="submit" class="btn btn-raised btn-success">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="section">
+                {% include 'default/partials/messages.html' %}
+                {% with GuidesList as UserGuides %}
+                    {% if UserGuides %}
+                        {% for Guide in UserGuides %}
+                            {% if user.is_staff %}
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="{% url 'view_guide' Guide.id %}">{{ Guide.title }}</a></h4>
+                                        {% autoescape off %}
+                                            {{ Guide.description|truncatechars:250 }}
+                                        {% endautoescape %}
+                                        <p>Created: {{ Guide.date }} by {{ Guide.user }}</p>
+                                        <a href="{% url 'view_guide' Guide.id %}" class="btn btn-raised btn-info"><i class="fa fa-chevron-right"></i> Read more</a>
+                                        {% if Guide.on_moderation %}
+                                            <a href="{% url 'apply_guide' Guide.id %}" class="btn btn-raised btn-warning"><i class="fa fa-check"></i> Apply guide</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% elif not user.is_staff and not Guide.on_moderation %}
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="{% url 'view_guide' Guide.id %}">{{ Guide.title }}</a></h4>
+                                        {% autoescape off %}
+                                            {{ Guide.description|truncatechars:250 }}
+                                        {% endautoescape %}
+                                        <p>Created: {{ Guide.date }} by {{ Guide.user }}</p>
+                                        <a href="{% url 'view_guide' Guide.id %}" class="btn btn-raised btn-info"><i class="fa fa-chevron-right"></i> Read more</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        Not found
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

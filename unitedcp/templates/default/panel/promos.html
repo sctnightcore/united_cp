@@ -1,0 +1,69 @@
+{% extends 'default/panel/index.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Промо-страница</h4></div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'system_panel' %}">{% trans "Dashboard" %}</a></li>
+                        <li class="active">Промо-страница</li>
+                    </ol>
+                </div>
+            </div>
+            {% include 'default/partials/messages.html' %}
+            <div class="row">
+                <div class="col-md-4 col-xs-12">
+                    <div class="white-box">
+                        <form class="form-horizontal form-material" action="{% url 'promo_page' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-md-12">{{ PromoForm.code.label }}</label>
+                                <div class="col-md-12">
+                                    {{ PromoForm.code }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-instagram" type="submit">{% trans "Активировать" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <div class="white-box">
+                        <div class="panel">
+                            <div class="sk-chat-widgets">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Ваши награды <small>можно забрать в пронтере у NPC Халявщик</small></div>
+                                    <div class="panel-body">
+                                        <ul class="chatonline">
+                                            {% if MyRewards %}
+                                                {% for Rewards in MyRewards %}
+                                                    <li>
+                                                        <a href="javascript:void(0)"><i class="fa fa-check"></i>
+                                                            <span>
+                                                                {{ forloop.counter }}. ItemID #{{ Rewards.reward_id }}, x{{ Rewards.reward_amount }}
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            {% else %}
+                                                <li>Наград нет</li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer text-center"> 2017 &copy; {{ ServerName }} - Промо-страница</footer>
+    </div>
+{% endblock %}

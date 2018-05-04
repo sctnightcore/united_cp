@@ -1,0 +1,55 @@
+{% extends 'default/rankings/index.html' %}
+{% load static %}
+{% load special %}
+{% load ragnarok %}
+
+{% block body %}
+    {% with PvPRanking as Characters %}
+        {% if Characters %}
+            <section class="youplay-features container mnb-30">
+                {% for topChar in Characters|slice:":3" %}
+                    <div class="col-sm-4">
+                        <div class="feature angled-bg">
+                            <h3>{{ topChar.char__name }} - Топ {{ forloop.counter }}</h3>
+                            <div style="max-height: 150px;">
+                                {% get_class_image topChar.char__account_id__sex topChar.char__class_field %}
+                                <p>{{ topChar.char__base_level }} / {{ topChar.char__job_level }} <br> {% get_class_name topChar.char__class_field %}</p>
+                                <p>{% get_guild_image topChar.char__guild_id %} {% get_guild_name topChar.char__guild_id %}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </section>
+            <section class="container">
+                <table class="table table-responsive table-striped">
+                    <thead class="thead-rankings">
+                    <tr>
+                        <th>Ранг</th>
+                        <th>Игрок</th>
+                        <th>Гильдия</th>
+                        <th>Убийств</th>
+                        <th>Смертей</th>
+                        <th>Рейтинг</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for Char in Characters|slice:"3:" %}
+                        <tr class="tbody-rankings">
+                            <td>{{ forloop.counter|add:+3 }}</td>
+                            <td><b>{{ Char.char__name }}</b> <br>{% get_class_name Char.char__class_field %} [{{ Char.char__base_level }}/{{ Char.char__job_level }}]</td>
+                            <td>{% get_guild_image Char.char__guild_id %} {% get_guild_name Char.char__guild_id %}</td>
+                            <td>{% insert_tag Char.kill_count %}</td>
+                            <td>{% insert_tag Char.death_count %}</td>
+                            <td>{% insert_tag Char.score %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% else %}
+            <div class="container">
+                Персонажей не найдено.
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}

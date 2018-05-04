@@ -1,0 +1,67 @@
+{% extends 'default/index.html' %}
+{% load special %}
+{% load ragnarok %}
+{% block body %}
+    <div class="page">
+        <section class="character-ranking">
+            <div class="container">
+                <h1>Alfheim.RO – Рейтинг гильдий</h1>
+            </div>
+            {% with GuildRanking as Guilds %}
+                {% if Guilds %}
+                    <div class="container">
+                        <div class="row">
+                            {% for topGuild in Guilds|slice:":3" %}
+                                <div class="col-sm-4">
+                                    <div class="feature angled-bg">
+                                        <div class="top-char-info">
+                                            <div class="guild-block guild-block_left">
+                                                <div class="guild-flag pull-left">
+                                                    <img src="http://chargen.alfheim.ro/emblem/{{topGuild.guild_id }}" class="guild-flag_emblem">
+                                                </div>
+                                                <p class="guild-info pull-left">
+                                                    Гильдия: <strong>{{ topGuild.guild_name }} - # {{ forloop.counter }}</strong> <br/>
+                                                    Создатель: <strong>{{ topGuild.master }}</strong> <br/>
+                                                    Уровень: <strong>{{ topGuild.guild_lv }}</strong> <br/>
+                                                </p>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="row">
+                            <table class="table table-responsive table-striped table-hover">
+                                <thead class="thead-rankings">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Guild</th>
+                                    <th>Level</th>
+                                    <th>Max members</th>
+                                    <th>Average lv.</th>
+                                    <th>Exp</th>
+                                </tr>
+                                </thead>
+                                <tbody class="white-bg">
+                                {% for Guild in Guilds|slice:"3:" %}
+                                    <tr class="tbody-rankings">
+                                        <td>{{ forloop.counter|add:+3 }}</td>
+                                        <td><img src="http://chargen.alfheim.ro/emblem/{{Guild.guild_id }}"> <b>{{ Guild.guild_name }}</b></td>
+                                        <td>{{ Guild.guild_lv }}</td>
+                                        <td>{{ Guild.max_member }}</td>
+                                        <td>{{ Guild.average_lv }}</td>
+                                        <td>{{ Guild.exp }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% else %}
+                    No Guilds.
+                {% endif %}
+            {% endwith %}
+        </section>
+    </div>
+{% endblock %}

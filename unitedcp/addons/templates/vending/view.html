@@ -1,0 +1,118 @@
+{% extends 'default/index.html' %}
+{% load static %}
+{% load ragnarok %}
+{% load special %}
+{% load map_draw %}
+
+{% block body %}
+    <style>
+        .hiddenRow {
+            padding: 0 !important;
+            border: 0;
+        }
+    </style>
+    <section class="full-height page-bg">
+        {% with VendingItems as Vending %}
+            <div class="container youplay-content">
+                <h1>Alfheim.RO – Просмотр торговца</h1>
+                <nav>
+                    <ul class="pager">
+                        <li class="previous"><a href="/addon/vending/index"><span aria-hidden="true">&larr;</span>
+                            Назад к списку</a></li>
+                    </ul>
+                </nav>
+                <div class="col-md-8 col-md-push-4">
+                    <table class="table table-responsive table-bordered">
+                        <tbody>
+                        {% for vend in Vending %}
+                            <tr data-toggle="collapse" data-target="#desc{{ vend.index }}">
+                                <td style="max-width: 20px;">
+                                    {% if vend.cartinventory_id__nameid > 4500 or vend.cartinventory_id__nameid < 4000 %}
+                                        <img src="{% static 'images/ragnarok/data/items/icons/' %}{{ vend.cartinventory_id__nameid }}.gif">
+                                    {% else %}
+                                        <img src="{% static 'images/ragnarok/data/items/icons/' %}card.gif">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if vend.cartinventory_id__refine %}
+                                        +{{ vend.cartinventory_id__refine }}
+                                    {% endif %}
+                                    <b>{{ vend.cartinventory_id__nameid__name_japanese }}</b>
+                                    {% if vend.cartinventory_id__nameid__slots %}
+                                        <b class="text-{{ vend.cartinventory_id__card0|yesno:"success,justify" }}">[{{ vend.cartinventory_id__nameid__slots }}]</b>
+                                    {% endif %}
+                                    <b class="pull-right">{{ vend.amount }}x</b>
+                                </td>
+                                <td style="background-color: #f7f7f7" class="text-right"> {{ vend.price }} z</td>
+                                <td class="text-right">{{ vend.vending_id__map }}</td>
+                            </tr>
+                            <tr class="hiddenRow">
+                                <td colspan="4" class="hiddenRow">
+                                    <div class="accordian-body collapse" id="desc{{ vend.index }}">
+                                        {% if vend.cartinventory_id__card0__name_japanese %}
+                                            <span>
+                                            <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                                {{ vend.cartinventory_id__card0__name_japanese }}<br>
+                                        </span>
+                                        {% endif %}
+                                        {% if vend.cartinventory_id__card1__name_japanese %}
+                                            <span>
+                                            <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                                {{ vend.cartinventory_id__card1__name_japanese }}<br>
+                                        </span>
+                                        {% endif %}
+                                        {% if vend.cartinventory_id__card2__name_japanese %}
+                                            <span>
+                                            <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                                {{ vend.cartinventory_id__card2__name_japanese }}<br>
+                                        </span>
+                                        {% endif %}
+                                        {% if vend.cartinventory_id__card3__name_japanese %}
+                                            <span>
+                                            <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                                {{ vend.cartinventory_id__card3__name_japanese }}<br>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4 col-md-pull-8" style="display: flex;padding-left: 0;">
+                    <div class="vending-player">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Торговец</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="vending-name">
+                            <span>
+                                 {{ Vending.0.vending_id__title }}
+                            </span>
+                                </div>
+                                <img class=""
+                                     src="https://chargen.alfheim.ro/avatar/{{ Vending.0.vending_id__char_id__name }}"
+                                     alt="Class Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="side-block" style="margin-left: 15px;">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Местоположение</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% vendor_map Vending.0.vending_id__map Vending.0.vending_id__x Vending.0.vending_id__y %}
+                                <hr/>
+                                <span>Карта: {{ Vending.0.vending_id__map }} <br/> Координаты: {{ Vending.0.vending_id__x }}, {{ Vending.0.vending_id__y }}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+    </section>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% load static %}
+{% load i18n %}
+{% with Donations.YandexMoney as YM %}
+    {% block yandex_money_modal %}
+        <div class="modal fade" id="donationsModal" tabindex="-1" role="dialog" aria-labelledby="donateModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Пополнение счета</h4>
+                        <h5><a href="http://forum.alfheim.ro/threads/cashshop-i-popolnenie-balansa.134/" target="_blank">Инструкция по донату</a></h5>
+                    </div>
+                    <div class="modal-body">
+                        {% if YM.enabled %}
+                            <form name="yandex_donate" method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
+                                <div class="form-horizontal">
+                                    <input type="hidden" name="receiver" value="{{ YM.wallet }}">
+                                    <input type="hidden" name="formcomment" value="" id="formcomment">
+                                    <input type="hidden" name="short-dest" value="" id="short-dest">
+                                    <input type="hidden" name="quickpay-form" value="donate" id="quickpay-form">
+                                    <input type="hidden" name="targets" value="" id="targets">
+                                    <input type="hidden" name="sum" value="0" data-type="number" id="sum">
+                                    <input type="hidden" name="label" value="" data-type="text" id="label">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div class="btn-group" data-toggle="buttons">
+                                                <label for="yandex_pc" class="btn btn-default">
+                                                    Яндекс.Деньги <i class="fa fa-money"></i>
+                                                    <input id="yandex_pc" type="radio" name="paymentType" value="PC">
+                                                </label>
+                                                <label for="yandex_ac" class="btn btn-default">
+                                                    VISA/MASTERCARD <i class="fa fa-credit-card"></i>
+                                                    <input id="yandex_ac" type="radio" name="paymentType" value="AC">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <label for="paymentAmount">Введите сумму</label>
+                                            <input id="paymentAmount" type="number" placeholder="Сумма" class="form-control form-control-line" onchange="submitForm()"
+                                                   onkeyup="submitForm()">
+                                            <b class="help-block">Вы заплатите: <span id="payValue"></span><span class="fa fa-ruble"></span></b>
+                                            <h4>После оплаты введите команду @transfer внутри игры, чтобы получить монеты</h4>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-block btn-facebook">Приобрести</button>
+                                </div>
+                            </form>
+                        {% else %}
+                            {% trans "Donations disabled on this page" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block extra_js %}
+        <script type="text/javascript">
+            function submitForm() {
+                var coins = document.getElementById('paymentAmount').value;
+                document.getElementById('formcomment').value = 'Пополнение счета на  (' + coins + ') рублей.';
+                document.getElementById('short-dest').value = 'Пополнение счета на  (' + coins + ') рублей.';
+                document.getElementById('targets').value = 'Пополнение счета на  (' + coins + ') рублей.';
+                document.getElementById('sum').value = coins * {{ YM.rate }};
+                document.getElementById('label').value = {{ request.user.id }};
+                return true;
+            }
+
+            var $jsName = document.getElementById('paymentAmount');
+            var $jsValue = document.getElementById('payValue');
+
+            $jsValue.innerHTML = 0;
+
+            $jsName.addEventListener('input', function (event) {
+                $jsValue.innerHTML = $jsName.value * {{ YM.rate }};
+            }, false);
+        </script>
+    {% endblock %}
+{% endwith %}

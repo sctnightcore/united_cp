@@ -1,0 +1,364 @@
+{% extends "default/index.html" %}
+{% load static %}
+{% load ragnarok %}
+{% load special %}
+{% load i18n %}
+{% load humanize %}
+{% block body %}
+    <body>
+    <div class="page">
+        <section class="character-ranking">
+            <!-- Banner -->
+            <div class="container">
+                <h1>Alfheim.RO – Профиль игрока <b class="text-warning">{{ CharacterData.name }}</b></h1>
+            </div>
+            <!-- /Banner -->
+
+            <div class="container">
+                <div class="row">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                                  data-toggle="tab">Основное</a></li>
+                        <li role="presentation"><a href="#woe_profile" aria-controls="woe_profile" role="tab"
+                                                   data-toggle="tab">WoE Профиль</a></li>
+                        <li role="presentation"><a href="#bg_profile" aria-controls="bg_profile" role="tab"
+                                                   data-toggle="tab">BG Профиль</a></li>
+                        <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Остальное</a>
+                        </li>
+                        {% if IsMine %}
+                            <li role="presentation"><a href="#edit" aria-controls="edit" role="tab" data-toggle="tab">Редактировать</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <!-- Основное -->
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="row">
+                                <h2>Основная инофрмация о {{ CharacterData.name }}</h2>
+                                <table class="table table-responsive">
+                                    <tbody>
+                                    <tr>
+                                        <td style="width: 30%"><b>{% trans "Base level" %}</b></td>
+                                        <td>
+                                            <div class="progress progress-lg">
+                                                <div class="progress-bar progress-bar-success progress-bar-striped active"
+                                                     role="progressbar"
+                                                     aria-valuenow="{{ CharacterData.base_level }}"
+                                                     aria-valuemin="1"
+                                                     aria-valuemax="99"
+                                                     style="min-width: 4em; width: {{ CharacterData.base_level }}%;">
+                                                    {{ CharacterData.base_level }} / 99
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{% trans "Job level" %}</b></td>
+                                        <td>
+                                            {% if CharacterData.class_field < 4000 %}
+                                                <div class="progress progress-lg">
+                                                    <div class="progress-bar progress-bar-info progress-bar-striped active"
+                                                         role="progressbar"
+                                                         aria-valuenow="{{ CharacterData.job_level }}"
+                                                         aria-valuemin="1"
+                                                         aria-valuemax="50"
+                                                         style="min-width: 4em; width: {{ CharacterData.job_level }}%;">
+                                                        {{ CharacterData.job_level }} / 50
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div class="progress progress-lg">
+                                                    <div class="progress-bar progress-bar-info progress-bar-striped active"
+                                                         role="progressbar"
+                                                         aria-valuenow="{{ CharacterData.job_level }}"
+                                                         aria-valuemin="1"
+                                                         aria-valuemax="70"
+                                                         style="min-width: 4em; width: {{ CharacterData.job_level }}%;">
+                                                        {{ CharacterData.job_level }} / 70
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{% trans "Job" %}</b></td>
+                                        <td>{% get_class_name CharacterData.class_field %}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>{% trans "Zeny" %}</b></td>
+                                        <td>{{ CharacterData.zeny|intcomma }}</td>
+                                    </tr>
+                                    {% if IsMine %}
+                                        <tr>
+                                            <td><b>{% trans "Last map" %}
+                                                <small>(видно только вам)</small>
+                                            </b></td>
+                                            <td>{{ CharacterData.last_map|default:"prontera" }}, {{ CharacterData.last_x }}, {{ CharacterData.last_y }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{% trans "Stats" %}
+                                                <small>(видно только вам)</small>
+                                            </b></td>
+                                            <td>
+                                                <table class="table table-bordered table-hover">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td style="width: 20%"><b>STR</b></td>
+                                                        <td>{{ CharacterData.str }}</td>
+                                                        <td><b>AGI</b></td>
+                                                        <td>{{ CharacterData.agi }}</td>
+                                                        <td><b>VIT</b></td>
+                                                        <td>{{ CharacterData.vit }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>INT</b></td>
+                                                        <td>{{ CharacterData.int }}</td>
+                                                        <td><b>DEX</b></td>
+                                                        <td>{{ CharacterData.dex }}</td>
+                                                        <td><b>LUK</b></td>
+                                                        <td>{{ CharacterData.luk }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td><b>{% trans "Online" %}</b></td>
+                                        <td>
+                                            {% if CharacterData.online %}
+                                                <span class="text-success"><i class="fa fa-check"></i></span>
+                                            {% else %}
+                                                <span class="text-danger"><i class="fa fa-times"></i></span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- ГВ -->
+                        <div role="tabpanel" class="tab-pane" id="woe_profile">
+                            <div class="row">
+                                <h2>Статистика WoE 2.0</h2>
+                            </div>
+                            <div class="row">
+                                <h3><b class="text-warning">{{ CharacterData.name }}</b> умения</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-stiped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="active">Умение</th>
+                                            <th class="success">Использовано</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for Skills in SkillData %}
+                                            <tr>
+                                                <td>
+                                                    <img src="https://static.divine-pride.net/images/skill/{{ Skills.skill_id }}.png">
+                                                </td>
+                                                <td>
+                                                    {{ Skills.count }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h3><b class="text-warning">{{ CharacterData.name }}</b> убийства</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-stiped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="active">Игрок</th>
+                                            <th class="success">Убил игрока</th>
+                                            <th class="warning">Локация</th>
+                                            <th class="danger">Умение</th>
+                                            <th class="info">Время</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for WoEKills in WoeLogData1 %}
+                                            {% if WoEKills.killer %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' WoEKills.killer_id %}">{{ WoEKills.killer }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' WoEKills.killed_id %}">{{ WoEKills.killed }}</a>
+                                                    </td>
+                                                    <td>{{ WoEKills.map }}</td>
+                                                    <td>
+                                                        <img src="https://static.divine-pride.net/images/skill/{{ WoEKills.skill }}.png">
+                                                    </td>
+                                                    <td>{{ WoEKills.time }}</td>
+                                                </tr>
+                                            {% else %}
+                                                Убийств нет.
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h3><b class="text-warning">{{ CharacterData.name }}</b> смерти</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-stiped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="active">Игрок</th>
+                                            <th class="success">Убил игрока</th>
+                                            <th class="warning">Локация</th>
+                                            <th class="danger">Умение</th>
+                                            <th class="info">Время</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for WoEDeaths in WoELogData2 %}
+                                            {% if WoEDeaths %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' WoEDeaths.killer_id %}">{{ WoEDeaths.killer }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' WoEDeaths.killed_id %}">{{ WoEDeaths.killed }}</a>
+                                                    </td>
+                                                    <td>{{ WoEDeaths.map }}</td>
+                                                    <td>
+                                                        <img src="https://static.divine-pride.net/images/skill/{{ WoEDeaths.skill }}.png">
+                                                    </td>
+                                                    <td>{{ WoEDeaths.time }}</td>
+                                                </tr>
+                                            {% else %}
+                                                Смертей нет.
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- БГ -->
+                        <div role="tabpanel" class="tab-pane" id="bg_profile">
+                            <div class="row">
+                                <h2>Статистика BG</h2>
+                            </div>
+                            <div class="row">
+                                <h3><b class="text-warning">{{ CharacterData.name }}</b> умения</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-stiped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="active">Умение</th>
+                                            <th class="success">Использовано</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for Skills in BgSkillData %}
+                                            <tr>
+                                                <td>
+                                                    <img src="https://static.divine-pride.net/images/skill/{{ Skills.skill_id }}.png">
+                                                </td>
+                                                <td>
+                                                    {{ Skills.count }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h3><b class="text-warning">{{ CharacterData.name }}</b> убийства</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-stiped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="active">Игрок</th>
+                                            <th class="success">Убил игрока</th>
+                                            <th class="warning">Локация</th>
+                                            <th class="danger">Умение</th>
+                                            <th class="info">Время</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for BgKills in BgLogData1 %}
+                                            {% if BgKills.killer %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' BgKills.killer_id %}">{{ BgKills.killer }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' BgKills.killed_id %}">{{ BgKills.killed }}</a>
+                                                    </td>
+                                                    <td>{{ BgKills.map }}</td>
+                                                    <td>
+                                                        <img src="https://static.divine-pride.net/images/skill/{{ BgKills.skill }}.png">
+                                                    </td>
+                                                    <td>{{ BgKills.time }}</td>
+                                                </tr>
+                                            {% else %}
+                                                Убийств нет.
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h3><b class="text-warning">{{ CharacterData.name }}</b> смерти</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-stiped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="active">Игрок</th>
+                                            <th class="success">Убил игрока</th>
+                                            <th class="warning">Локация</th>
+                                            <th class="danger">Умение</th>
+                                            <th class="info">Время</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for BgDeaths in BgLogData2 %}
+                                            {% if BgDeaths %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' BgDeaths.killer_id %}">{{ BgDeaths.killer }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'character_profile' BgDeaths.killed_id %}">{{ BgDeaths.killed }}</a>
+                                                    </td>
+                                                    <td>{{ BgDeaths.map }}</td>
+                                                    <td>
+                                                        <img src="https://static.divine-pride.net/images/skill/{{ BgDeaths.skill }}.png">
+                                                    </td>
+                                                    <td>{{ BgDeaths.time }}</td>
+                                                </tr>
+                                            {% else %}
+                                                Смертей нет.
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="other">Coming soon</div>
+                        <div role="tabpanel" class="tab-pane" id="edit">Coming soon</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+{% endblock %}

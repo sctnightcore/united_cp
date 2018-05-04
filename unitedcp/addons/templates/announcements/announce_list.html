@@ -1,0 +1,92 @@
+{% extends 'united/index.html' %}
+{% load static %}
+
+{% block banner %}
+    <div class="youplay-banner banner-top youplay-banner-parallax small">
+        <div class="image" style="background-image: url('{% static 'images/light/top-bg_new.jpg' %}')"></div>
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1>Players announcements</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container youplay-content">
+        <div ng-controller="announcementsController">
+            <div ng-show="!announcements">Loading...</div>
+            <div ng-hide="!announcements">
+                <div class="col-md-9 col-md-push-3">
+                    {% block messages_ %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-success">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endblock %}
+                    <div uib-alert ng-show="!showAlert" ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">
+                        <strong>Attention!</strong> We're glad to show you Announcement service!
+                    </div>
+                    <table class="table table-responsive table-bordered">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="youplay-input">
+                                    <input type="text" placeholder="Filter by title..."
+                                           ng-model="filt.title">
+                                </div>
+                                <a href="" class="" title="Sort by title" ng-click="sortBy('title')">Sort by title
+                                    <span ng-show="propertyName == 'title'" ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span>
+                                </a>
+                            </th>
+                            <th>
+                                <div class="youplay-input">
+                                    <input type="text" placeholder="Filter by player..." ng-model="filt.main_character">
+                                </div>
+                                <a href="" class="" title="Sort by player" ng-click="sortBy('main_character')">Sort by player
+                                    <span ng-show="propertyName == 'main_character'" ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span>
+                                </a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="announce in data = (announcements) | pagination: currentPage : numPerPage | orderBy:propertyName:reverse">
+                        <tr class="player-announce">
+                            <td><b class="text-info">[[announce.announce_type]]: </b><a href="/addon/announcements/view/[[announce.id]]/">[[announce.title]]</a></td>
+                            <td><a href="/addon/announcements/view/[[announce.id]]/">[[announce.main_character]]</a></td>
+                        </tr>
+                    </table>
+                    <ul uib-pagination
+                        ng-model="currentPage"
+                        total-items="data.length"
+                        items-per-page="numPerPage"
+                        class="pagination-sm"
+                        next-text="Next"
+                        previous-text="Back"
+                        max-size="5"
+                        ng-change="pageChanged()">
+                    </ul>
+                </div>
+                <div class="col-md-3 col-md-pull-9">
+                    <div class="side-block">
+                        <h4 class="block-title">Menu:</h4>
+                        <ul class="block-content">
+                            <li><a href="{% url 'announce_add' %}" class="btn btn-sm btn-default">Create announcement</a></li>
+                        </ul>
+                    </div>
+                    <div class="side-block">
+                        <h4 class="block-title">Comfort</h4>
+                        <div class="block-content">
+                            <label for="num">Total [[data.length]] announcements, [[numPerPage]] per page.</label>
+                            <div class="youplay-select" for="num">
+                                <select id="num" ng-options="disp as disp.size for disp in numsPerPage" ng-model="disp" ng-change="update(disp.size)"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

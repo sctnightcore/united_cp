@@ -1,0 +1,144 @@
+{% extends 'default/index.html' %}
+{% load static %}
+{% load special %}
+{% load ragnarok %}
+{% block body %}
+    <style>
+        .hiddenRow {
+            padding: 0 !important;
+            border: 0;
+        }
+    </style>
+    <section class="full-height page-bg">
+        <div class="container">
+            <h1>Alfheim.RO – Список торговцев</h1>
+            <div ng-controller="vendorsController">
+                <div ng-show="!vendorsList">Загрузка...</div>
+                <div ng-hide="!vendorsList">
+                    <div class="col-md-9 col-md-push-3">
+                        <table class="table table-responsive table-bordered">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Введите название предмета"
+                                               ng-model="search.cartinventory_id__nameid__name_japanese"
+                                               class="form-control">
+                                    </div>
+                                    <a href="" class="" title="Sort by item"
+                                       ng-click="sortBy('cartinventory_id__nameid__name_japanese')">Сортировать по
+                                        названию
+                                        <span ng-show="propertyName == 'cartinventory_id__nameid__name_japanese'"
+                                              ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Введите цену" ng-model="search.price"
+                                               class="form-control">
+                                    </div>
+                                    <a href="" class="" title="Sort by cost" ng-click="sortBy('price')">Сортировать по
+                                        цене
+                                        <span ng-show="propertyName == 'price'"
+                                              ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span>
+                                    </a>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Введите имя продавца"
+                                               ng-model="search.vending_id__char_id__name" class="form-control">
+                                    </div>
+                                    <a href="" class="" title="Sort by vendor" ng-click="sortBy('vending_id__char_id__name')">Сортировать
+                                        по продавцу
+                                        <span ng-show="propertyName == 'vending_id__char_id__name'"
+                                              ng-class="(reverse)? 'fa fa-arrow-up':'fa fa-arrow-down'"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody ng-repeat="vend in data = (vendorsList | filter : search) | pagination: currentPage : numPerPage | orderBy:propertyName:reverse">
+                            <tr data-toggle="collapse" data-target="#desc[[vend.amount + vend.price]]">
+                                <td>
+                                    <img ng-if="vend.cartinventory_id__nameid < 4500 && vend.cartinventory_id__nameid > 4000" src="{% static 'images/ragnarok/data/items/icons/' %}card.gif">
+                                    <img ng-if="vend.cartinventory_id__nameid > 4500 || vend.cartinventory_id__nameid < 4000" src="{% static 'images/ragnarok/data/items/icons/' %}[[vend.cartinventory_id__nameid]].gif">
+                                </td>
+                                <td>
+                                    <span ng-if="vend.cartinventory_id__refine">+[[vend.cartinventory_id__refine]]</span>
+                                    <b><a ng-click="searchItem(vend.cartinventory_id__nameid__name_japanese)">[[vend.cartinventory_id__nameid__name_japanese]]</a>
+                                        <span
+                                                ng-if="vend.cartinventory_id__nameid__slots > 0">[ [[vend.cartinventory_id__nameid__slots]] ]</span>
+                                        <span
+                                                ng-if="vend.cartinventory_card0 || vend.cartinventory_card1 || vend.cartinventory_card2 || vend.cartinventory_card3"><i
+                                                class="text-danger">*</i></span></b>
+                                    <b class="pull-right">[[vend.amount]]x</b>
+                                </td>
+                                <td style="background-color: #f7f7f7" class="text-right">[[vend.price | number :
+                                    fractionSize]]z
+                                </td>
+                                <td class="text-right"><a href="/addon/vending/view/[[vend.vending_id]]/">[[vend.vending_id__char_id__name]]</a></td>
+                            </tr>
+                            <tr class="hiddenRow">
+                                <td colspan="4" class="hiddenRow">
+                                    <div class="accordian-body collapse" id="desc[[vend.amount + vend.price]]">
+                            <span ng-if="vend.cartinventory_card0 > 0">
+                                Card 1: <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                [[vend.cartinventory_id__card0__name_japanese]]<br>
+                            </span>
+                                        <span ng-if="vend.cartinventory_card1 > 0">
+                                Card 2: <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                [[vend.cartinventory_id__card1__name_japanese]]<br>
+                            </span>
+                                        <span ng-if="vend.cartinventory_card2 > 0">
+                                Card 3: <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                [[vend.cartinventory_id__card2__name_japanese]]<br>
+                            </span>
+                                        <span ng-if="vend.cartinventory_card3 > 0">
+                                Card 4: <img src="{% static 'images/ragnarok/data/items/icons/4001.gif' %}">
+                                [[vend.cartinventory_id__card3__name_japanese]]<br>
+                            </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <ul uib-pagination
+                            ng-model="currentPage"
+                            total-items="data.length"
+                            items-per-page="numPerPage"
+                            class="pagination-sm"
+                            next-text="Вперед"
+                            previous-text="Назад"
+                            max-size="5"
+                            ng-change="pageChanged()">
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-md-pull-9">
+                        <div class="side-block ">
+                            <h4 class="block-title">Поиск товаров</h4>
+                            <div class="block-content">
+                                <label for="num">Всего [[data.length]] предметов, [[numPerPage]] на странице</label>
+                                <div class="form-group" for="num">
+                                    <select id="num" ng-options="disp as disp.size for disp in numsPerPage"
+                                            ng-model="disp"
+                                            ng-change="update(disp.size)" class="form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="side-block ">
+                            <h4 class="block-title">Подсказки:</h4>
+                            <ul class="block-content">
+                                <li>1. Звездочка <b class="text-danger">*</b> после названия говорит о том, что в
+                                    предмет вставлена карта
+                                </li>
+                                <li>2. Чтобы посмотреть вставленные карты, нажите левой кнопкой мыши по ряду с
+                                    предметом
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

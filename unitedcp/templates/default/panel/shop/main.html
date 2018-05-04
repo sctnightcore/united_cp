@@ -1,0 +1,86 @@
+{% extends 'default/panel/index.html' %}
+{% load static %}
+{% load i18n %}
+{% load special %}
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">
+                        {% trans "Shop" %}
+                    </h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <a data-toggle="modal" data-target="#donationsModal" class="btn btn-instagram pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">
+                        {% trans "Buy balance" %}
+                    </a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'system_panel' %}">{% trans "Dashboard" %}</a></li>
+                        <li class="active">{% trans "Shop" %}</li>
+                    </ol>
+                </div>
+            </div>
+            {% include 'default/partials/messages.html' %}
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="white-box">
+                        <div class="list-group list-group-full">
+                            <div class="list-group-item bg-playro">
+                                {% trans "Categories" %}
+                            </div>
+                            <a class="list-group-item {% if RequestedCategory is None %}bg-special{% endif %}" href="{% url 'shop_main' %}">
+                                <span class="badge badge-playro">{{ ShopItems|length }}</span> {% trans "All" %}
+                            </a>
+                            {% if ShopCategories %}
+                                {% for Category in ShopCategories %}
+                                    <a class="list-group-item {% if RequestedCategory == Category.id %}bg-special{% endif %}"
+                                       href="{% url 'shop_main' %}?category={{ Category.id }}">
+                                        <span class="badge badge-playro">{% get_category_items_count Category.id %}</span> {{ Category.category_name }}
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <div class="white-box">
+                        <div class="row">
+                            {% if ShopItems %}
+                                {% for Item in ShopItems %}
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <img class="card-img-top" src="{% static 'images/' %}{{ Item.item_image_thumbnail }}"
+                                                 alt="{{ Item.item_name }}" style="max-height: 200px;">
+                                            <div class="card-block">
+                                                <h4 class="card-title text-playro">
+                                                    {{ Item.item_name }}
+                                                    <small class="text-danger">
+                                                        {% if Item.item_discount %}
+                                                            -{{ Item.item_discount }}%!
+                                                        {% endif %}
+                                                    </small>
+                                                </h4>
+                                                <p class="card-text">
+                                                    RUB
+                                                    {% if Item.item_discount %}
+                                                        <s>{{ Item.item_cost }}</s> => {% get_discount_price Item.item_cost Item.item_discount %}
+                                                    {% else %}
+                                                        {{ Item.item_cost }}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                            <a href="{% url 'shop_view_item' Item.id %}"></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% trans "There is no items in shop, please come back later" %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

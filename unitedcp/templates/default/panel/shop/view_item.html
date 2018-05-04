@@ -1,0 +1,61 @@
+{% extends 'default/panel/index.html' %}
+{% load i18n %}
+{% load static %}
+{% load special %}
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">
+                        {% trans "Shop" %}
+                    </h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <a data-toggle="modal" data-target="#donationsModal" class="btn btn-instagram pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">
+                        {% trans "Buy balance" %}
+                    </a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'system_panel' %}">{% trans "Dashboard" %}</a></li>
+                        <li><a href="{% url 'shop_main' %}">{% trans "Shop" %}</a></li>
+                        <li class="active">{% trans "Item view" %}</li>
+                    </ol>
+                </div>
+            </div>
+            {% include 'default/partials/messages.html' %}
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="white-box">
+                        <div class="list-group list-group-full">
+                            <div class="list-group-item bg-playro">
+                                {% trans "Actions" %}
+                            </div>
+                            <a class="list-group-item" href="">
+                                <i class="fa fa-cart-plus"></i>
+                                {% trans "Add to cart" %}
+                                {% if ViewedItem.item_discount %}
+                                    (RUB <s>{{ ViewedItem.item_cost }}</s> => {% get_discount_price ViewedItem.item_cost ViewedItem.item_discount %})
+                                {% else %}
+                                    {{ ViewedItem.item_cost }}
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-xs-12">
+                    <div class="white-box">
+                        <h3 class="box-title">{{ ViewedItem.item_name }}
+                            <small>{% trans "In-game service" %}</small>
+                        </h3>
+                        <p>{{ ViewedItem.item_description }}</p>
+                        <hr>
+                        <p>
+                            <small>{% trans "After item purchased you can get it in-game, visit Prontera, NPC: 'Shop Items'" %}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer text-center"> 2017 &copy; {{ ServerName }} - {% trans "Purchase" %} :: {{ ViewedItem.item_name }} ::</footer>
+    </div>
+{% endblock %}
